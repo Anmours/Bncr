@@ -1,0 +1,127 @@
+/**
+ * This file is part of the Bncr project.
+ * @author Aming
+ * @name wxQianxun
+ * @version 1.0.0
+ * @description wxQianxun适配器
+ * @adapter true
+ * @public false
+ * @disable false
+ * @priority 2
+ * @Copyright ©2023 Aming and Anmours. All rights reserved
+ * Unauthorized copying of this file, via any medium is strictly prohibited
+ */
+
+module.exports = async () => {
+    if (!sysMethod.config.wxBot.Qianxun.enable) return sysMethod.startOutLogs('未启用Qianxun 退出.');
+    let QianxunUrl = sysMethod.config.wxBot.Qianxun.sendUrl;
+    if (!QianxunUrl) return console.log('可爱猫:配置文件未设置sendUrl');
+    const { randomUUID } = require('crypto');
+    //这里new的名字将来会作为 sender.getFrom() 的返回值
+    const wxQianxun = new Adapter('wxQianxun');
+    // 包装原生require   你也可以使用其他任何请求工具 例如axios
+    const request = require('util').promisify(require('request'));
+    // wx数据库
+    const wxDB = new BncrDB('wxQianxun');
+    let botId = await wxDB.get('qianxun_botid', ''); //自动设置，无需更改
+    /**向/api/系统路由中添加路由 */
+    router.get('/bot/Qianxun', (req, res) =>
+        res.send({ msg: '这是Bncr Qianxun Api接口，你的get请求测试正常~，请用post交互数据' })
+    );
+    router.post('/bot/Qianxun', async (req, res) => {
+        try {
+            const body = req.body;
+            if (botId !== body.wxid)
+                /* 另一种set数据库操作，第三个值必须为一个对象，传入def字段时，设置成功返回def设置的值*/
+                botId = await wxDB.set('qianxun_botid', body.wxid, { def: body.wxid });
+
+            // console.log('消息类型:', body.data.data.msgType);
+
+            /**
+             * 消息类型：1|文本 3|图片 34|语音 42|名片 43|视频 47|
+             * 动态表情 48|地理位置 49|分享链接或附件 2001|
+             * 红包 2002|小程序 2003|群邀请 10000|系统消息
+             */
+            if (body.data.data.msgType !== 1) return `拒收该消息:${body.msg}`;
+            let msgInfo = null;
+            //私聊
+            if (body.event === 10009 && body.data.data.fromType === 1) {
+                msgInfo = {
+                    userId: body.data.data.fromWxid || '',
+                    userName: '',
+                    groupId: '0',
+                    groupName: '',
+                    msg: body.data.data.msg || '',
+                    msgId: body.data.data.msgBase64 || '',
+                    type: `Social`,
+                };
+                //群
+            } else if (body.event === 10008 && body.data.data.fromType === 2) {
+                msgInfo = {
+                    userId: body.data.data.finalFromWxid || '',
+                    userName: '',
+                    groupId: body.data.data.fromWxid.replace('@chatroom', '') || '0',
+                    groupName: '',
+                    msg: body.data.data.msg || '',
+                    msgId: body.data.data.msgBase64 || '',
+                    type: `Social`,
+                };
+            }
+            msgInfo && wxQianxun.receive(msgInfo);
+            res.send({ status: 200, data: '', msg: 'ok' });
+        } catch (e) {
+            console.error('千寻消息接收器错误:', e);
+            res.send({ status: 400, data: '', msg: e.toString() });
+        }
+    });
+
+    wxQianxun.reply = async function (replyInfo) {
+        // console.log('replyInfo', replyInfo);
+        let body = null;
+        const to_Wxid = +replyInfo.groupId ? replyInfo.groupId + '@chatroom' : replyInfo.userId;
+        switch (replyInfo.type) {
+            case 'text':
+                body = {
+                    type: "Q0001",
+                    data: {
+                        wxid: to_Wxid,
+                        msg: replyInfo.msg
+                    }
+                };
+                break;
+            case 'image':
+                body = {
+                    type: "Q0010",
+                    data: {
+                        wxid: to_Wxid,
+                        path: replyInfo.msg
+                    }
+                };
+                break;
+            default:
+                return;
+                break;
+        }
+        body && (await requestQianxun(body));
+        // console.log('body', body);
+        return ''; //reply中的return 最终会返回到调用者 wx没有撤回方法，所以没有必要返回东西
+    };
+    /* 推送消息方法 */
+    wxQianxun.push = async function (replyInfo) {
+        return this.reply(replyInfo);
+    };
+    /* wx无法撤回消息 为空 */
+    wxQianxun.delMsg = () => { };
+    /* 发送消息请求体 */
+    async function requestQianxun(body) {
+        return (
+            await request({
+                url: `${QianxunUrl}/DaenWxHook/httpapi/?wxid=${botId}`,
+                method: 'post',
+                body: body,
+                json: true
+            })
+        ).body;
+    }
+    return wxQianxun;
+};
