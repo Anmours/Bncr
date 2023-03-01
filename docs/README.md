@@ -76,5 +76,6 @@ docker exec -it bncr /bin/sh
 
 # 其他
 
- [Github](https://github.com/Anmours/Bncr) | [TG频道](https://t.me/red_Lights_District)
-
+ [Github](https://github.com/Anmours/Bncr)   
+ [TG频道](https://t.me/red_Lights_District)  
+ [赞助列表](../sponsors.md)
