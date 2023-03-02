@@ -9,13 +9,21 @@ module.exports = {
     /* 开发者模式 默认true，会监听plugins目录实时重载插件,
     如果不调试插件请关闭该功能进一步节省内存(可能也就能释放几M吧) */
     developerMode: true,
-    /* qq机器人 */
+    /* 内置qq机器人 */
     qqBot: {
         enable: false, 
         qqId: 1234, /* 作为机器人的qq号 */
         platform: 5, /* 登录设备，1:安卓手机 2:aPad 3:安卓手表 4:MacOS 5:iPad */
         /* 日志等级，"trace" | "debug" | "info" | "warn" | "error" | "fatal" | "mark" | "off"; */
         log_level: 'error', //只显示错误消息
+    },
+	/* 外置qq */
+    qqBot_Outside: {   /* 和内置qq只能二选一，如果要共存，那么要修改某个new Adapter('qq'); 值，不懂勿动*/
+        enable: false,
+        mode: 'ws',  //ws或http 目前只支持ws反向链接和http模式
+        sendUrl: 'http://192.168.31.192:9696'
+        /* 如果是http模式，则需要设置 sendUrl，改地址为 远端qq机器人的监听地址:端口 */
+        /* 接受消息地址为： http://bncrip:9090/api/bot/qqHttp */
     },
     /* HumanTG  Bncr内置的人行tg */
     HumanTG: {

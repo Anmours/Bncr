@@ -1,7 +1,5 @@
-
-
 > -   Bncr 是一个 Node.js 框架，开发框架需要有一定的 JavaScript 和 Node.js 基础。
-> -   本人用傻妞(sillyGirl)比较多一点，习惯了一些语法与功能，所以 Bncr 上有很多傻妞语语法的身影~  如果你是一个傻妞开发者，切换至 Bncr 可以说是无缝切换！
+> -   本人用傻妞(sillyGirl)比较多一点，习惯了一些语法与功能，所以 Bncr 上有很多傻妞语语法的身影~ 如果你是一个傻妞开发者，切换至 Bncr 可以说是无缝切换！
 
 # 开发环境搭建
 
@@ -17,6 +15,7 @@
 ## 文件目录说明
 
 -   适配器开发
+
     -   Adapter 下只有根目录下的.js 文件才会被尝试载入，二级以下的目录不会加载
     -   重载：适配器本身开发需求并不是太大，所以没有做热重载，需要重启重载
 
@@ -32,11 +31,30 @@
 
     -   重载：plugins 下的所有文件都是保存既重载
 
-- 静态资源
-    - public目录下的文件将被作为静态资源公开，访问 `http://ip:9090/public/对应文件名` 即可访问到，因此，你可以操控bncr把文件存放到该目录，在通过本机url的方式发送出去（建议用uuid或其他随机数来表示文件名，否则资源多的情况下可能会导致误发文件）。
-
+-   静态资源
+    -   public 目录下的文件将被作为静态资源公开，访问 `http://ip:9090/public/对应文件名` 即可访问到，因此，你可以操控 bncr 把文件存放到该目录，在通过本机 url 的方式发送出去（建议用 uuid 或其他随机数来表示文件名，否则资源多的情况下可能会导致误发文件）。
 
 # 全局方法介绍
+
+## router 系统路由
+该路由基于express.Router()，挂载在系统api/路径下,你可以在9090/api/下扩展服务
+```js
+//示例
+// get访问http://bncrip:9090/api/qq/ws 
+router.get('/qq/ws', (req, res) => {
+    res.send({ msg: '这是Bncr 外置qq Api接口，你的get请求测试正常~，请用ws交互数据' });
+});
+// post访问http://bncrip:9090/api/qq/ws 
+router.post('/qq/ws', async (req, res) => {
+    res.send({ msg: '这是Bncr 外置qq Api接口，你的post请求测试正常~，请用ws交互数据' });
+});
+// ws监听ws://bncrip:9090/api/qq/ws 
+router.ws('/qq/ws', ws => {
+    ws.on('message', msg => {
+        console.log('收到ws请求', msg);
+    });
+});
+```
 
 ## sysMethod 系统方法
 
