@@ -2,7 +2,7 @@
 初次启动会在你映射的宿主机路径下创建5个文件夹，分别为 `Adapter` `config` `public` `db` `plugins`
 `config` 下会自动生成一些启动所需的配置文件，已进行详细注释，根据自己情况来填写；
 
-`Adapter`下会自带 `tgbot、HumanTG 、qqbot、wxKeAImao`以及系统适配器；
+`Adapter`下会自带 `tgbot、HumanTG 、qqbot、wxKeAImao、wxQianxun`以及系统适配器；
 
 `public` 为静态资源目录，你可以在里边放一些文件，通过 `http://ip:9090/public/文件名`来访问这些资源
 

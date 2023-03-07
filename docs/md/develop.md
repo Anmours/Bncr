@@ -352,6 +352,16 @@ module.exports = () => {
     /* args = string[] */
     Ding.delMsg = async function (args) {};
 
+    /* 
+    桥
+    其他方法请定义在Bridge中，在插件中通过 sender.Bridge.xxx来访问
+     */
+    Ding.Bridge = {
+        logTime:()=>{
+
+        }
+    }
+
     //向框架内部发送信息，以下除了type都是必填字段,如果是number或其他值必须全部转为string
     Ding.receive({
         userId: '用户id' || '',
@@ -393,6 +403,9 @@ module.exports = () => {
 ### sender.getFrom() 获取来自什么平台
 
 ### sender.param() 提取触发词中的$x
+
+### sender.Bridge 适配器<桥>
+该值是一个对象，如果在适配器中定义了Bridge，则可以通过sender.Bridge.xxx来访问
 
 ### async sender.isAdmin() 是否管理员消息
 
