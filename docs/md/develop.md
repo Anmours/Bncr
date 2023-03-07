@@ -286,7 +286,7 @@ module.exports = async () => {
   //you code
 }
 
-// 上面的代码等同于
+// 上面的代码等同于 
 
 module.exports = () => {
   return new Promise(async (resolve, reject) => {
