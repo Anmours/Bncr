@@ -34,14 +34,21 @@ _
 ## Docker
 (目前只支持docker安装)
 ```bash
+# 在你要存放数据的目录下手动新建BncrData文件夹
+# (以root目录为例) 
+# 警告！群晖用户请勿在root下存放任何文件！修改成你的硬盘目录！
+mkdir /root/BncrData
+
+# 拉取并运行容器
 docker run -dit \
- -v /你的宿主机目录:/bncr/BncrData \
+ -v /root/BncrData:/bncr/BncrData \
  -p 9090:9090 \
  --name bncr \
  --hostname bncr \
  --restart on-failure:5 \
 anmour/bncr
 ```
+
 更新
 ```bash
 docker run --rm \
@@ -50,7 +57,6 @@ docker run --rm \
  -c --run-once \
 bncr
 ```
-
 
 查看日志
 ```bash
