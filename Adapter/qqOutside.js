@@ -1,7 +1,8 @@
 /**
  * This file is part of the App project.
  * @author Aming
- * @name qqOutside
+ * @name qq
+ * @origin 官方
  * @version 1.0.0
  * @description 外置qq机器人适配器
  * @adapter true
@@ -17,6 +18,7 @@ module.exports = async () => {
     let qq = new Adapter('qq');
     if (sysMethod.config.qqBot_Outside.mode === 'ws') await ws(qq);
     else if (sysMethod.config.qqBot_Outside.mode === 'http') await http(qq);
+
     return qq;
 };
 
@@ -31,7 +33,7 @@ async function ws(qq) {
             const body = JSON.parse(msg);
             /* 拒绝心跳链接消息 */
             if (body.post_type === 'meta_event') return;
-            // console.log('收到ws请求', body);
+            console.log('收到ws请求', body);
             if (body.echo) {
                 for (const e of listArr) {
                     if (body.echo !== e.uuid) continue;
@@ -73,9 +75,9 @@ async function ws(qq) {
                 } else if (replyInfo.type === 'video') {
                     body.params.message = `[CQ:video,file=${replyInfo.msg}]`;
                 }
+                // console.log(body);
                 ws.send(JSON.stringify(body));
                 return new Promise((resolve, reject) => {
-                    console.log('发送消息了');
                     listArr.push({ uuid, eventS });
                     let timeoutID = setTimeout(() => {
                         delListens(uuid);
@@ -98,6 +100,7 @@ async function ws(qq) {
 
         /* 推送消息 */
         qq.push = async function (replyInfo) {
+            console.log(replyInfo);
             return await this.reply(replyInfo);
         };
 
@@ -120,7 +123,7 @@ async function ws(qq) {
             }
         };
     });
-    
+
     /**向/api/系统路由中添加路由 */
     router.get('/qq/ws', (req, res) =>
         res.send({ msg: '这是Bncr 外置qq Api接口，你的get请求测试正常~，请用ws交互数据' })

@@ -2,6 +2,7 @@
  * This file is part of the Bncr project.
  * @author Aming
  * @name wxKeAImao
+ * @origin 官方
  * @version 1.0.0
  * @description wxKeAImao适配器
  * @adapter true

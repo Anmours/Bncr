@@ -1,18 +1,19 @@
 /**
  * @author Aming
  * @name 官方命令
+ * @origin 官方
  * @version 1.0.5
  * @description 官方命令
  * @platform tgBot qq ssh HumanTG wxQianxun
  * @rule ^(重启|bncr版本|启动时间|机器码)$
- * @rule ^(编辑测试|撤销测试|推送消息测试|来个图片)$
+ * @rule ^(编辑测试|撤销测试|推送消息测试|来个图片|来个视频|推送图片测试)$
  * @rule ^(监听该群|屏蔽该群|回复该群|不回复该群)$
- * @rule ^(eval) ([^\n]+)
+ * @rule ^(eval) ([^\n]+)$
  * @rule ^(name|time|我的id|群id)$
- * @rule ^(等待) ([^ \n]+)
- * @rule ^(get|del) ([^ \n]+) ([^ \n]+)
- * @rule ^(set) ([^ \n]+) ([^ \n]+) ([^ \n]+)
- * @admin true
+ * @rule ^(等待) ([^ \n]+)$
+ * @rule ^(get|del) ([^ \n]+) ([^ \n]+)$
+ * @rule ^(set) ([^ \n]+) ([^ \n]+) ([^ \n]+)$
+ * @admin false
  * @public false
  * @priority 9999
  * @disable false
@@ -37,25 +38,29 @@ module.exports = async sender => {
     /* HideEnd */
     switch (param1) {
         case '监听该群':
+            if (!(await s.isAdmin())) return;
             if (!groupId || groupId === '0') return s.reply('非群组禁用');
             //异步设置
             new BncrDB('groupWhitelist').set(`${from}:${groupId}`, true);
             return s.reply('ok');
             break;
         case '屏蔽该群':
+            if (!(await s.isAdmin())) return;
             if (!groupId || groupId === '0') return s.reply('非群组禁用');
             //异步设置
             new BncrDB('groupWhitelist').del(`${from}:${groupId}`);
             return s.reply('ok');
             break;
         case '不回复该群':
+            if (!(await s.isAdmin())) return;
             if (!groupId || groupId === '0') return s.reply('非群组禁用');
             //同步设置
             return s.reply(await new BncrDB('noReplylist').set(`${from}:${groupId}`, true, { def: 'ok' }));
             break;
         case '回复该群':
+            if (!(await s.isAdmin())) return;
             if (!groupId || groupId === '0') return s.reply('非群组禁用');
-            return s.reply(await new BncrDB('noReplylist').del(`${from}:${groupId}`, 'ok'));
+            return s.reply(await new BncrDB('noReplylist').set(`${from}:${groupId}`, false, { def: 'ok' }));
             break;
         case '重启':
             if (!(await s.isAdmin())) return;
@@ -82,6 +87,7 @@ module.exports = async sender => {
             await s.reply(sysMethod.getTime('yyyy-MM-dd hh:mm:ss'));
             break;
         case 'name':
+            if (!(await s.isAdmin())) return;
             await s.reply(await sysDB.get('name', '空值'));
             break;
         case '机器码':
@@ -114,9 +120,9 @@ module.exports = async sender => {
             let nowVal = await db.get(param3, '');
             await s.reply(await db.set(param3, param4, { def: '设置成功，你可以在30秒内“撤销”操作！' }));
             let input = await s.waitInput(() => { }, 30);
-            input && input.getMsg() === '撤销'
-                ? input.reply(await db.set(param3, nowVal, { def: '已撤销' }))
-                : s.reply('已保存');
+            if (input && input.getMsg() === '撤销') input.reply(await db.set(param3, nowVal, { def: '已撤销' }));
+            else s.inlineSugar(input.getMsg()); //代替用户发送消息至框架内部，
+
             break;
         case 'del':
             if (!(await s.isAdmin())) return;
@@ -137,11 +143,13 @@ module.exports = async sender => {
             }
             break;
         case '等待':
+            if (!(await s.isAdmin())) return;
             console.log('等待:', param2, '秒');
             await sysMethod.sleep(param2);
             console.log('等待结束');
             break;
         case '编辑测试':
+            if (!(await s.isAdmin())) return;
             if (s.getFrom() === 'HumanTG') {
                 let log = `编辑中\n`;
                 let logs = ``;
@@ -159,27 +167,51 @@ module.exports = async sender => {
             }
             break;
         case '撤销测试':
-            if (s.getFrom() === 'HumanTG') {
-                await s.reply('即将删除该消息');
-                //异步删除消息 挂到后台等待设定的时间，不会阻塞当前进程
-                s.delMsg(s.getMsgId(), { wait: 2 });
-            }
+            let sendid = await s.reply('即将删除该消息');
+            //异步删除消息 挂到后台等待设定的时间，不会阻塞当前进程
+            s.delMsg(s.getMsgId(), sendid, { wait: 5 });
             break;
         case '来个图片':
+            /* 处理本地文件 */
+            if (s.getFrom() === 'tgBot' || s.getFrom() === 'HumanTG')
+                jpgURL = path.join(process.cwd(), `BncrData/public/OIP-C.jpg`);
+            else
+                jpgURL = `http://192.168.31.192:9090/public/OIP-C.jpg`;
+
             await s.reply({
                 type: 'image',
-                // msg: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg?source=1940ef5c',
-                msg: 'http://192.168.31.192:9090/public/OIP-C.jpg',
+                /* 发送网络图片 */
+                msg: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg',
+                /* 发送本地文件 ，qqwx 支持本机url地址发送，tg 人行必须要文件绝对路径*/
+                // msg: jpgURL,
             });
+
+            break;
+        case '来个视频':
+            console.log(await s.reply({
+                type: 'video',
+                /* 发送网络视频 */
+                msg: 'https://txmov2.a.yximgs.com/upic/2020/02/21/10/BMjAyMDAyMjExMDUwNDFfMzc0ODkwODM4XzIzODI0NzAzNjIxXzFfMw==_b_Bfa350be2d39dac0304141571e8ab92ed.mp4',
+            }));
             break;
         case '推送消息测试':
             //推送消息
             await sysMethod.push({
                 platform: 'tgBot',
-                groupId: `-1001704263871`,
+                groupId: `0`,
                 userId: `1629887728`,
                 msg: '这是一条推送消息',
             });
+            break;
+        case '推送图片测试':
+            //推送消息
+            console.log(await sysMethod.push({
+                platform: 'tgBot',
+                groupId: `0`,
+                userId: `1629887728`,
+                msg: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg?source=1940ef5c',
+                type: 'image'
+            }));
             break;
         default:
             break;

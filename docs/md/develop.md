@@ -167,6 +167,8 @@ sysMethod.pushAdmin({
 
 有关数据库操作，你可以在官方插件中找到全部用法示例
 
+> 警告! db文件可能看起来是json格式文件，但实则不是！不要试图用任何工具直接修改db文件，这可能会造成数据损坏!
+
 ### get()获取数据
 
 该方法接受三个参数
@@ -252,6 +254,8 @@ sysdb.set('name', 'Aming5'); // 返回一个Promise
  * @author Aming
  * 适配器名称
  * @name HumanTG
+ * 组织名  预留字段，未来发布插件会用到
+ * @origin 官方
  * 版本号
  * @version 1.0.0
  * 说明
@@ -315,6 +319,7 @@ module.exports = mian
 /**
  * @author Aming
  * @name 钉钉
+ * @origin 官方
  * @version 1.0.0
  * @description 钉钉适配器
  * @adapter true
@@ -393,6 +398,11 @@ module.exports = () => {
 
 ```javascript
 await sender.isAdmin(); //true or false
+```
+### sender.inlineSugar(msg) 内联
+代替用户触发消息(发送消息)
+```javascript
+await sender.inlineSugar('重启');  //代替用户发送重启命令
 ```
 
 ### async sender.delMsg() 删除/撤销消息
@@ -490,6 +500,8 @@ sender.delMsg(phone.getMsgId();)
  * @author Aming
  * 插件名
  * @name 官方命令
+ * 组织名  预留字段，未来发布插件会用到
+ * @origin 官方
  * 版本号
  * @version 1.0.5
  * 说明
@@ -586,7 +598,7 @@ module.exports = mian
  */
 module.exports = async s => {
     /* 
-   @rule ^(hello|你好) ([^ \n]+)$
+   rule ^(hello|你好) ([^ \n]+)$
   上面的rule定义 发送:
   hello 任何值
   你好 任何值 

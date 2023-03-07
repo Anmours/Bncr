@@ -2,6 +2,7 @@
  * This file is part of the Bncr project.
  * @author Aming
  * @name HumanTG
+ * @origin 官方
  * @version 1.0.0
  * @description 适配器
  * @adapter true
@@ -61,7 +62,7 @@ module.exports = () => {
         /* 保存管理员信息 ，如果需要手动设置管理员 注释这句*/
         HumanTgDb.set('admin', loginUserInfo.id.toString());
         // console.log(loginUserInfo);
-
+        
         let startLog = `Hello ${loginUserInfo.firstName || loginUserInfo.username}\n`;
         startLog += `Bncr 启动成功.....\n`;
         startLog += sysMethod.getTime('yyyy-MM-dd hh:mm:ss') + '\n';
@@ -98,28 +99,38 @@ module.exports = () => {
             // console.log('replyInfo',replyInfo);
             try {
                 let sendRes = null;
+                let sendID = +replyInfo.groupId || +replyInfo.userId;
                 if (replyInfo.type === 'text') {
-                    let send = +replyInfo.groupId || +replyInfo.userId;
-                    /* 去掉false && 为编辑消息 */
+                    /* 编辑消息 */
                     if (replyInfo.userId === loginUserInfo.id.toString()) {
                         try {
-                            sendRes = await client.editMessage(send, {
+                            sendRes = await client.editMessage(sendID, {
                                 message: +replyInfo.toMsgId,
                                 text: replyInfo.msg,
                             });
                             return (sendRes && `${sendRes.id}`) || '';
                         } catch (e) {
-                            // console.log('编辑消息失败:', e);
                         }
                     }
                     /* 编辑消息失败直接发送信息 */
-                    sendRes = await client.sendMessage(send, {
+                    sendRes = await client.sendMessage(sendID, {
                         message: replyInfo.msg,
                         parseMode: 'md',
                         replyTo: +replyInfo.toMsgId,
                     });
-                    return (sendRes && `${sendRes.id}`) || '';
+                } else if (replyInfo.type === 'image') {
+                    sendRes = await client.sendMessage(sendID, {
+                        file:replyInfo.msg,
+                        replyTo: +replyInfo.toMsgId,
+                        forceDocument:false
+                    });
+                } else if (replyInfo.type === 'video') {
+                    sendRes = await client.sendMessage(sendID, {
+                        file: replyInfo.msg,
+                        replyTo: +replyInfo.toMsgId,
+                    });
                 }
+                return (sendRes && `${sendRes.id}`) || '';
             } catch (e) {
                 console.error('HumanTG发送消息失败', e);
             }

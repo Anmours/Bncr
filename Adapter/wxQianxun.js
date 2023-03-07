@@ -2,6 +2,7 @@
  * This file is part of the Bncr project.
  * @author Aming
  * @name wxQianxun
+ * @origin 官方
  * @version 1.0.0
  * @description wxQianxun适配器
  * @adapter true
@@ -81,6 +82,7 @@ module.exports = async () => {
         const to_Wxid = +replyInfo.groupId ? replyInfo.groupId + '@chatroom' : replyInfo.userId;
         switch (replyInfo.type) {
             case 'text':
+                replyInfo.msg = replyInfo.msg.replace(/\n/g, '\r');
                 body = {
                     type: "Q0001",
                     data: {

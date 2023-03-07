@@ -2,6 +2,7 @@
  * This file is part of the App project.
  * @author Aming
  * @name ssh
+ * @origin 官方
  * @version 1.0.0
  * @description ssh控制台适配器
  * @adapter true

@@ -2,6 +2,7 @@
  * This file is part of the App project.
  * @author Aming
  * @name tgBot
+ * @origin 官方
  * @version 1.0.0
  * @description tgBot适配器
  * @adapter true
@@ -39,6 +40,10 @@ module.exports = () => {
             let sendId = +replyInfo.groupId || +replyInfo.userId;
             if (replyInfo.type === 'text') {
                 send = await tgBot.sendMessage(sendId, replyInfo.msg);
+            } else if (replyInfo.type === 'image') {
+                send = await tgBot.sendPhoto(sendId, replyInfo.msg);
+            } else if (replyInfo.type === 'video') {
+                send = await tgBot.sendVideo(sendId, replyInfo.msg);
             }
             return send ? `${send.chat.id}:${send.message_id}` : '0';
         } catch (e) {
@@ -48,10 +53,7 @@ module.exports = () => {
     /* 推送方法 */
     tg.push = async function (replyInfo) {
         try {
-            if (replyInfo.type === 'text') {
-                +replyInfo.groupId && (await tgBot.sendMessage(+replyInfo.groupId, replyInfo.msg));
-                +replyInfo.userId && (await tgBot.sendMessage(+replyInfo.userId, replyInfo.msg));
-            }
+            return await this.reply(replyInfo);
         } catch (e) {
             console.error('tgBot push消息失败', e);
         }
@@ -59,7 +61,6 @@ module.exports = () => {
     /* 注入删除消息方法 */
     tg.delMsg = async function (args) {
         try {
-            await this.isWaitDel(args);
             args.forEach(e => {
                 if (typeof e === 'string' || typeof e === 'number') {
                     let [chatid, sendid] = e.split(':');
@@ -79,18 +80,19 @@ module.exports = () => {
     tgBot.on('message', req => {
         try {
             // console.log("data: ", req);
-            let msgInfo = {};
-            msgInfo['userId'] = req['from']['id'] + '' || '';
-            msgInfo['userName'] = req['from']['username'] || '';
-            msgInfo['groupId'] = req['chat']['type'] !== 'private' ? req['chat']['id'] + '' : '0';
-            msgInfo['groupName'] = req['group_name'] || '';
-            msgInfo['msg'] = req['text'] || '';
-            msgInfo['msgId'] = `${req['chat']['id']}:${req['message_id']}` || '';
-            msgInfo['type'] = `Social`;
+            let msgInfo = {
+                userId: req['from']['id'] + '' || '',
+                userName: req['from']['username'] || '',
+                groupId: req['chat']['type'] !== 'private' ? req['chat']['id'] + '' : '0',
+                groupName: req['group_name'] || '',
+                msg: req['text'] || '',
+                msgId: `${req['chat']['id']}:${req['message_id']}` || '',
+                type: `Social`,
+            };
             // console.log('tg最终消息：', msgInfo);
             tg.receive(msgInfo);
         } catch (e) {
-            console.log('tgBot:', e);
+            console.log('tgBot接收器错误:', e);
         }
     });
     sysMethod.startOutLogs('链接tgBot 成功.');
