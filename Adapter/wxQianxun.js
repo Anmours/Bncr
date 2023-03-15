@@ -26,10 +26,10 @@ module.exports = async () => {
     const wxDB = new BncrDB('wxQianxun');
     let botId = await wxDB.get('qianxun_botid', ''); //自动设置，无需更改
     /**向/api/系统路由中添加路由 */
-    router.get('/bot/Qianxun', (req, res) =>
+    router.get('/api/bot/Qianxun', (req, res) =>
         res.send({ msg: '这是Bncr Qianxun Api接口，你的get请求测试正常~，请用post交互数据' })
     );
-    router.post('/bot/Qianxun', async (req, res) => {
+    router.post('/api/bot/Qianxun', async (req, res) => {
         try {
             const body = req.body;
             if (botId !== body.wxid)
@@ -96,7 +96,7 @@ module.exports = async () => {
                     type: "Q0010",
                     data: {
                         wxid: to_Wxid,
-                        path: replyInfo.msg
+                        path: replyInfo.path
                     }
                 };
                 break;

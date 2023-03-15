@@ -27,10 +27,10 @@ module.exports = async () => {
     let token = await wxDB.get('keaimao_token', ''); //自动设置，无需更改
     let botId = await wxDB.get('keaimao_botid', ''); //自动设置，无需更改
     /**向/api/系统路由中添加路由 */
-    router.get('/bot/KeAImao', (req, res) =>
+    router.get('/api/bot/KeAImao', (req, res) =>
         res.send({ msg: '这是Bncr KeAImao Api接口，你的get请求测试正常~，请用post交互数据' })
     );
-    router.post('/bot/KeAImao', async (req, res) => {
+    router.post('/api/bot/KeAImao', async (req, res) => {
         try {
             const body = req.body;
             /* 拒收自己消息 */
@@ -126,7 +126,7 @@ module.exports = async () => {
                         // 根据可爱猫api，需要传一个唯一值过去，否则会根据该名在可爱猫服务器下找该文件名发送，找不到才会下载传过去的url图片发送
                         // 这里我使用的是uuid，你可以调整成其他随机值
                         name: randomUUID().split('-').join(''),
-                        url: replyInfo.msg,
+                        url: replyInfo.path,
                     },
                     token: token,
                     robot_wxid: botId,
@@ -140,7 +140,7 @@ module.exports = async () => {
                         // 根据可爱猫api，需要传一个唯一值过去，否则会根据该名在可爱猫服务器下找该文件名发送，找不到才会下载传过去的url图片发送
                         // 这里我使用的是uuid，你可以调整成其他随机值
                         name: randomUUID().split('-').join(''),
-                        url: replyInfo.msg,
+                        url: replyInfo.path,
                     },
                     token: token,
                     robot_wxid: botId,

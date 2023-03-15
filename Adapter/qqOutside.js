@@ -28,12 +28,12 @@ async function ws(qq) {
     const { randomUUID } = require('crypto');
     const listArr = [];
     /* ws监听地址  ws://192.168.31.192:9090/api/qq/ws */
-    router.ws('/qq/ws', ws => {
+    router.ws('/api/bot/qqws', ws => {
         ws.on('message', msg => {
             const body = JSON.parse(msg);
             /* 拒绝心跳链接消息 */
             if (body.post_type === 'meta_event') return;
-            console.log('收到ws请求', body);
+            // console.log('收到ws请求', body);
             if (body.echo) {
                 for (const e of listArr) {
                     if (body.echo !== e.uuid) continue;
@@ -71,9 +71,9 @@ async function ws(qq) {
                 if (replyInfo.type === 'text') {
                     body.params.message = replyInfo.msg;
                 } else if (replyInfo.type === 'image') {
-                    body.params.message = `[CQ:image,file=${replyInfo.msg}]`;
+                    body.params.message = `[CQ:image,file=${replyInfo.path}]`;
                 } else if (replyInfo.type === 'video') {
-                    body.params.message = `[CQ:video,file=${replyInfo.msg}]`;
+                    body.params.message = `[CQ:video,file=${replyInfo.path}]`;
                 }
                 // console.log(body);
                 ws.send(JSON.stringify(body));
@@ -100,7 +100,7 @@ async function ws(qq) {
 
         /* 推送消息 */
         qq.push = async function (replyInfo) {
-            console.log(replyInfo);
+            // console.log(replyInfo);
             return await this.reply(replyInfo);
         };
 
@@ -125,10 +125,10 @@ async function ws(qq) {
     });
 
     /**向/api/系统路由中添加路由 */
-    router.get('/qq/ws', (req, res) =>
+    router.get('api/bot/qqws', (req, res) =>
         res.send({ msg: '这是Bncr 外置qq Api接口，你的get请求测试正常~，请用ws交互数据' })
     );
-    router.post('/qq/ws', async (req, res) =>
+    router.post('/api/bot/qqws', async (req, res) =>
         res.send({ msg: '这是Bncr 外置qq Api接口，你的post请求测试正常~，请用ws交互数据' })
     );
 
@@ -142,13 +142,13 @@ async function http(qq) {
     /* 上报地址（gocq监听地址） */
     let senderUrl = sysMethod.config.qqBot_Outside.sendUrl;
     if (!senderUrl) {
-        console.log('可爱猫:配置文件未设置sendUrl');
+        console.log('qq:配置文件未设置sendUrl');
         qq = null;
         return;
     }
 
     /* 接受消息地址为： http://bncrip:9090/api/bot/qqHttp */
-    router.post('/bot/qqHttp', async (req, res) => {
+    router.post('/api/bot/qqHttp', async (req, res) => {
         res.send('ok');
         const body = req.body;
         // console.log('req', req.body);
@@ -169,10 +169,10 @@ async function http(qq) {
     });
 
     /**向/api/系统路由中添加路由 */
-    router.get('/bot/qqHttp', (req, res) =>
+    router.get('/api/bot/qqHttp', (req, res) =>
         res.send({ msg: '这是Bncr 外置qq Api接口，你的get请求测试正常~，请用ws交互数据' })
     );
-    router.post('/bot/qqHttp', async (req, res) =>
+    router.post('/api/bot/qqHttp', async (req, res) =>
         res.send({ msg: '这是Bncr 外置qq Api接口，你的post请求测试正常~，请用ws交互数据' })
     );
 

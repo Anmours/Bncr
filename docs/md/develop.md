@@ -37,19 +37,21 @@
 # 全局方法介绍
 
 ## router 系统路由
-该路由基于express.Router()，挂载在系统api/路径下,你可以在9090/api/下扩展服务
+
+该路由基于 express.Router()，挂载在系统/路径下,你可以在 9090/下扩展服务
+
 ```js
 //示例
-// get访问http://bncrip:9090/api/qq/ws 
-router.get('/qq/ws', (req, res) => {
+// get访问http://bncrip:9090/api/bot/qqws
+router.get('/api/bot/qqws', (req, res) => {
     res.send({ msg: '这是Bncr 外置qq Api接口，你的get请求测试正常~，请用ws交互数据' });
 });
-// post访问http://bncrip:9090/api/qq/ws 
-router.post('/qq/ws', async (req, res) => {
+// post访问http://bncrip:9090/api/bot/qqws
+router.post('/api/bot/qqws', async (req, res) => {
     res.send({ msg: '这是Bncr 外置qq Api接口，你的post请求测试正常~，请用ws交互数据' });
 });
-// ws监听ws://bncrip:9090/api/qq/ws 
-router.ws('/qq/ws', ws => {
+// ws监听ws://bncrip:9090/api/bot/qqws
+router.ws('/api/bot/qqws', ws => {
     ws.on('message', msg => {
         console.log('收到ws请求', msg);
     });
@@ -167,7 +169,7 @@ sysMethod.pushAdmin({
 
 有关数据库操作，你可以在官方插件中找到全部用法示例
 
-> 警告! db文件可能看起来是json格式文件，但实则不是！不要试图用任何工具直接修改db文件，这可能会造成数据损坏!
+> 警告! db 文件可能看起来是 json 格式文件，但实则不是！不要试图用任何工具直接修改 db 文件，这可能会造成数据损坏!
 
 ### get()获取数据
 
@@ -238,7 +240,9 @@ sysdb.set('name', 'Aming5'); // 返回一个Promise
 
 同 get 使用相同，删除成功返回 true，有第二个参数则返回第二个参数，失败返回 false ，没有该值会返回 undefined
 
-### keys()读取所有 key
+### getAllForm() 读取所有 form(表)名 返回一个 Array
+
+### keys()读取所有 key 返回一个 Array
 
 返回一个字符串数组
 
@@ -286,7 +290,7 @@ module.exports = async () => {
   //you code
 }
 
-// 上面的代码等同于 
+// 上面的代码等同于
 
 module.exports = () => {
   return new Promise(async (resolve, reject) => {
@@ -357,10 +361,8 @@ module.exports = () => {
     其他方法请定义在Bridge中，在插件中通过 sender.Bridge.xxx来访问
      */
     Ding.Bridge = {
-        logTime:()=>{
-
-        }
-    }
+        logTime: () => {},
+    };
 
     //向框架内部发送信息，以下除了type都是必填字段,如果是number或其他值必须全部转为string
     Ding.receive({
@@ -405,17 +407,21 @@ module.exports = () => {
 ### sender.param() 提取触发词中的$x
 
 ### sender.Bridge 适配器<桥>
-该值是一个对象，如果在适配器中定义了Bridge，则可以通过sender.Bridge.xxx来访问
+
+该值是一个对象，如果在适配器中定义了 Bridge，则可以通过 sender.Bridge.xxx 来访问
 
 ### async sender.isAdmin() 是否管理员消息
 
 ```javascript
 await sender.isAdmin(); //true or false
 ```
+
 ### sender.inlineSugar(msg) 内联
-代替用户触发消息(发送消息)
+
+以触发者的身份向系统内部发送消息
+
 ```javascript
-await sender.inlineSugar('重启');  //代替用户发送重启命令
+await sender.inlineSugar('重启'); //以触发者的身份向系统内部发送消息
 ```
 
 ### async sender.delMsg() 删除/撤销消息
@@ -455,13 +461,15 @@ await s.reply({
 // 他们的区别在于可以指定发送消息的类型
 await s.reply({
     type: 'image', // video
-    msg: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.YKoZzgmubNBxQ8j-mmoTKAHaEK?pid=ImgDet&rs=1',
+    msg: '图片来啦',
+    path: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg',
 });
 
 //进阶
 let replyid = await s.reply({
     type: 'image', // video
-    msg: 'https://tse4-mm.cn.bing.net/th/id/OIP-C.YKoZzgmubNBxQ8j-mmoTKAHaEK?pid=ImgDet&rs=1',
+    path: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg',
+    msg: '图片来啦',
     userId: '发给谁', //不传该字段默认是收到消息的人
     groupId: '发给群id', //不传该字段默认是收到消息的群
     toMsgId: '回复的消息id', //不传该字段默认是收到消息id

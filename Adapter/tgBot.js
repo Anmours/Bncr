@@ -41,9 +41,9 @@ module.exports = () => {
             if (replyInfo.type === 'text') {
                 send = await tgBot.sendMessage(sendId, replyInfo.msg);
             } else if (replyInfo.type === 'image') {
-                send = await tgBot.sendPhoto(sendId, replyInfo.msg);
+                send = await tgBot.sendPhoto(sendId, replyInfo.path);
             } else if (replyInfo.type === 'video') {
-                send = await tgBot.sendVideo(sendId, replyInfo.msg);
+                send = await tgBot.sendVideo(sendId, replyInfo.path);
             }
             return send ? `${send.chat.id}:${send.message_id}` : '0';
         } catch (e) {

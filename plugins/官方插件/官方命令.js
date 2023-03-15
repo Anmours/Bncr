@@ -4,9 +4,9 @@
  * @origin 官方
  * @version 1.0.5
  * @description 官方命令
- * @platform tgBot qq ssh HumanTG wxQianxun
+ * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
  * @rule ^(重启|bncr版本|启动时间|机器码)$
- * @rule ^(编辑测试|撤销测试|推送消息测试|来个图片|来个视频|推送图片测试)$
+ * @rule ^(编辑测试|撤销测试|推送消息测试|来个图片|来个视频|推送图片测试|推送管理员测试)$
  * @rule ^(监听该群|屏蔽该群|回复该群|不回复该群)$
  * @rule ^(eval) ([^\n]+)$
  * @rule ^(name|time|我的id|群id)$
@@ -33,8 +33,6 @@ module.exports = async sender => {
         userId = s.getUserId(),
         groupId = s.getGroupId(),
         from = s.getFrom();
-    // console.log('插件执行了');
-    // console.log('插件执行了');
     /* HideEnd */
     switch (param1) {
         case '监听该群':
@@ -61,6 +59,16 @@ module.exports = async sender => {
             if (!(await s.isAdmin())) return;
             if (!groupId || groupId === '0') return s.reply('非群组禁用');
             return s.reply(await new BncrDB('noReplylist').set(`${from}:${groupId}`, false, { def: 'ok' }));
+            break;
+        case '拉黑这个b':
+            if (!(await s.isAdmin())) return;
+            if (groupId !== '0') return s.reply('群组禁用，该功能只能对私聊使用');
+            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${userId}`, true, { def: '已拉黑这个b' }));
+            break;
+        case '拉出小黑屋':
+            if (!(await s.isAdmin())) return;
+            if (groupId !== '0') return s.reply('群组禁用，该功能只能对私聊使用');
+            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${userId}`, false, { def: '拉出小黑屋ok' }));
             break;
         case '重启':
             if (!(await s.isAdmin())) return;
@@ -120,7 +128,8 @@ module.exports = async sender => {
             let nowVal = await db.get(param3, '');
             await s.reply(await db.set(param3, param4, { def: '设置成功，你可以在30秒内“撤销”操作！' }));
             let input = await s.waitInput(() => { }, 30);
-            if (input && input.getMsg() === '撤销') input.reply(await db.set(param3, nowVal, { def: '已撤销' }));
+            if (!input) return;
+            else if (input.getMsg() === '撤销') input.reply(await db.set(param3, nowVal, { def: '已撤销' }));
             else s.inlineSugar(input.getMsg()); //代替用户发送消息至框架内部，
 
             break;
@@ -173,6 +182,7 @@ module.exports = async sender => {
             break;
         case '来个图片':
             /* 处理本地文件 */
+            /* 发送本地文件 : qqwx 支持本机url地址发送，tgBot和人行必须要文件绝对路径*/
             if (s.getFrom() === 'tgBot' || s.getFrom() === 'HumanTG')
                 jpgURL = path.join(process.cwd(), `BncrData/public/OIP-C.jpg`);
             else
@@ -181,8 +191,8 @@ module.exports = async sender => {
             await s.reply({
                 type: 'image',
                 /* 发送网络图片 */
-                msg: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg',
-                /* 发送本地文件 ，qqwx 支持本机url地址发送，tg 人行必须要文件绝对路径*/
+                path: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg',
+                msg: '图来啦~'
                 // msg: jpgURL,
             });
 
@@ -191,7 +201,8 @@ module.exports = async sender => {
             console.log(await s.reply({
                 type: 'video',
                 /* 发送网络视频 */
-                msg: 'https://txmov2.a.yximgs.com/upic/2020/02/21/10/BMjAyMDAyMjExMDUwNDFfMzc0ODkwODM4XzIzODI0NzAzNjIxXzFfMw==_b_Bfa350be2d39dac0304141571e8ab92ed.mp4',
+                path: 'https://txmov2.a.yximgs.com/upic/2020/02/21/10/BMjAyMDAyMjExMDUwNDFfMzc0ODkwODM4XzIzODI0NzAzNjIxXzFfMw==_b_Bfa350be2d39dac0304141571e8ab92ed.mp4',
+                msg: '视频来啦~'
             }));
             break;
         case '推送消息测试':
@@ -209,9 +220,16 @@ module.exports = async sender => {
                 platform: 'tgBot',
                 groupId: `0`,
                 userId: `1629887728`,
-                msg: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg?source=1940ef5c',
+                msg: '这是一条推送的图片消息',
+                path: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg?source=1940ef5c',
                 type: 'image'
             }));
+            break;
+        case '推送管理员测试':
+            sysMethod.pushAdmin({
+                platform: [],
+                msg: `这是通知管理员的消息`,
+            });
             break;
         default:
             break;

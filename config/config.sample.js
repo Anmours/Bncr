@@ -17,14 +17,16 @@ module.exports = {
         /* 日志等级，"trace" | "debug" | "info" | "warn" | "error" | "fatal" | "mark" | "off"; */
         log_level: 'error', //只显示错误消息
     },
-	/* 外置qq */
+    /* 外置qq */
     qqBot_Outside: {   /* 和内置qq只能二选一，如果要共存，那么要修改某个new Adapter('qq'); 值，不懂勿动*/
         enable: false,
         mode: 'ws',  //ws或http 目前只支持ws反向链接和http模式
-		// ws反向接受地址为 ws://bncrip:9090/api/bot/ws
-        sendUrl: 'http://192.168.31.192:9696'
+		// ws反向接受地址为 ws://bncrip:9090/api/bot/qqws
+        
         /* 如果是http模式，则需要设置 sendUrl，改地址为 远端qq机器人的监听地址:端口 */
         /* 接受消息地址为： http://bncrip:9090/api/bot/qqHttp */
+        sendUrl: 'http://192.168.31.192:9696'
+        
     },
     /* HumanTG  Bncr内置的人行tg */
     HumanTG: {
@@ -66,17 +68,17 @@ module.exports = {
             /* 上报地址 （远端可爱猫的接受消息地址） */
             sendUrl: 'http://192.168.31.115:34567',  
         },
-        //千寻 （暂不支持）
+        //千寻 
         Qianxun: {
             enable: false,
-            receiveUrl: 'http://',
-            sendUrl: 'http://',
+            /* 上报地址 （远端千寻的接受消息地址） */
+            sendUrl: 'http://192.168.31.115:7777',
         },
-        //xyo（暂不支持）
+        //xyo
         Xyo: {
             enable: false,
-            receiveUrl: 'http://',
-            sendUrl: 'http://',
+            /* 上报地址 （远端xyo的接受消息地址） */
+            sendUrl: 'http://192.168.31.115:34567',
         },
     },
     /* 关闭后不会加载任何通过页眉设置的定时任务 */
