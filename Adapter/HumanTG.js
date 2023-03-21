@@ -5,7 +5,7 @@ const { throws } = require('assert');
  * @author Aming
  * @name HumanTG
  * @origin 官方
- * @version 1.0.2
+ * @version 1.0.3
  * @description 适配器
  * @adapter true
  * @public false
@@ -54,6 +54,7 @@ module.exports = () => {
             phoneCode: async () => await input.text('输入TG收到的验证码: '),
             onError: err => console.log(err),
         });
+        await client.getDialogs({});
         sysMethod.startOutLogs('HumanTG登录成功...');
         // await sysMethod.sleep(5);
         const newSession = client.session.save();
@@ -64,7 +65,7 @@ module.exports = () => {
         /* 保存管理员信息 ，如果需要手动设置管理员 注释这句*/
         HumanTgDb.set('admin', loginUserInfo.id.toString());
         // console.log(loginUserInfo);
-
+        
         let startLog = `Hello ${loginUserInfo.firstName || loginUserInfo.username}\n`;
         startLog += `Bncr 启动成功.....\n`;
         startLog += sysMethod.getTime('yyyy-MM-dd hh:mm:ss') + '\n';
@@ -78,36 +79,25 @@ module.exports = () => {
             /* 空消息拒收 */
             if (!event.message.text) return;
             const message = event.message;
-            // console.log('className',message.peerId.className);
-            // console.log('userId',message.peerId.userId);
-            // console.log('channelId',message.peerId.channelId);
-            // console.log('message', message);
-            // console.log(' event.message',  event.message);
             const senderInfo = await message.getSender();
-            // const mess = await message.getMessages();
-
             /* bot消息拒收 */
             if (senderInfo?.id?.toString() === botid) return;
-            // if (senderInfo?.bot) return;
-            // console.log('senderInfo',senderInfo);
-            // console.log('friendId', message?.peerId?.userId);
-            // console.log('friendId2', message?.peerId?.userId.toString());
             const msgInfo = {
                 userId: senderInfo?.id?.toString() || '',
                 friendId: message?.peerId?.userId?.toString() || '',
-                userName: senderInfo?.username || senderInfo.firstName || '',
-                groupId: event.isPrivate ? '0' : message.chatId.toString() || '0',
-                groupName: event.isPrivate ? '' : message.chat.title || '',
+                userName: senderInfo?.username || senderInfo?.firstName || '',
+                groupId: event.isPrivate ? '0' : message?.chatId?.toString() || '0',
+                groupName: event.isPrivate ? '' : message?.chat?.title || '',
                 msg: message.text || '',
-                msgId: `${message.id}` || '',
+                msgId: `${message?.id}` || '',
                 replyToMsgId: `${message?.replyTo?.replyToMsgId}` || '0',
             };
+            /* 禁用陌生人消息 */
+            // if (msgInfo.userId !== loginUserInfo.id.toString() && msgInfo.groupId === '0') return
             if (message?.replyTo?.replyToMsgId) {
-                let redID = +msgInfo.groupId || +msgInfo.friendId || +msgInfo.userId;
-                const replyMsg = await HumanTG.Bridge.getReplyMsg(redID, +msgInfo.replyToMsgId);
-                if (Array.isArray(replyMsg) && replyMsg[0]?.message) {
-                    msgInfo.msg += replyMsg[0]?.message;
-                }
+                let ChatID = +msgInfo.groupId || +msgInfo.friendId || +msgInfo.userId;
+                const replyMsg = await HumanTG.Bridge.getReplyMsg(ChatID, +msgInfo.replyToMsgId);
+                Array.isArray(replyMsg) && replyMsg[0]?.message && (msgInfo.msg += replyMsg[0]?.message);
             }
             HumanTG.receive(msgInfo);
         }, new NewMessage());
@@ -115,7 +105,8 @@ module.exports = () => {
         HumanTG.reply = async function (replyInfo) {
             try {
                 let sendRes = null,
-                    sendID = +replyInfo.groupId || +this.msgInfo.friendId || +replyInfo.userId;
+                    sendID = +replyInfo.groupId || +this?.msgInfo?.friendId || +replyInfo.userId;
+                // console.log('sendID', sendID);
                 if (replyInfo.type === 'text') {
                     /* 编辑消息 */
                     if (replyInfo.userId === loginUserInfo.id.toString()) {
@@ -126,7 +117,9 @@ module.exports = () => {
                                 text: replyInfo.msg,
                             });
                             return (sendRes && `${sendRes.id}`) || '';
-                        } catch (e) {}
+                        } catch (e) {
+                            // console.log(e);
+                        }
                     }
                     /* 编辑消息失败直接发送信息 */
                     sendRes = await client.sendMessage(sendID, {
@@ -170,7 +163,7 @@ module.exports = () => {
         HumanTG.Bridge.editImage = async function (replyInfo) {
             if (Object.prototype.toString.call(replyInfo) === '[object Object]') {
                 let sendID = +replyInfo.groupId || +replyInfo.userId;
-                if (replyInfo.type === 'image') {
+                if (['image', 'video'].includes(replyInfo.type)) {
                     /* 编辑消息 */
                     try {
                         sendRes = await client.editMessage(sendID, {
