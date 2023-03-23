@@ -2,7 +2,7 @@
  * @author Aming
  * @name 官方命令
  * @origin 官方
- * @version 1.0.5
+ * @version 1.0.6
  * @description 官方命令
  * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
  * @rule ^(重启|bncr版本|启动时间|机器码)$
@@ -55,18 +55,21 @@ module.exports = async s => {
             break;
         case '回复该群':
             if (!(await s.isAdmin())) return;
-            if (!groupId || groupId === '0') return s.reply('非群组禁用');
+            if (!+groupId) return s.reply('非群组禁用');
             return s.reply(await new BncrDB('noReplylist').set(`${from}:${groupId}`, false, { def: 'ok' }));
             break;
         case '拉黑这个b':
             if (!(await s.isAdmin())) return;
-            if (groupId !== '0') return s.reply('群组禁用，该功能只能对私聊使用');
-            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${userId}`, true, { def: '已拉黑这个b' }));
+            if (from !== 'HumanTG') return s.reply('非HumanTG禁用')
+            if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id')
+            if (+groupId) return s.reply('群组禁用，该功能只能对私聊使用');
+            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, true, { def: '已拉黑这个b' }));
             break;
         case '拉出小黑屋':
             if (!(await s.isAdmin())) return;
-            if (groupId !== '0') return s.reply('群组禁用，该功能只能对私聊使用');
-            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${userId}`, false, { def: '拉出小黑屋ok' }));
+            if (from !== 'HumanTG') return s.reply('非HumanTG禁用')
+            if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id')
+            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, false, { def: '拉出小黑屋ok' }));
             break;
         case '重启':
             if (!(await s.isAdmin())) return;
@@ -78,7 +81,7 @@ module.exports = async s => {
                 groupId: s.getGroupId(),
                 toMsgId: s.getMsgId(),
             });
-            if (s.getFrom() === 'tgBot') await sysMethod.sleep(2);
+            if (s.getFrom() === 'tgBot') await sysMethod.sleep(1);
             process.exit(300);
             break;
         case '启动时间':
@@ -87,7 +90,7 @@ module.exports = async s => {
             break;
         case 'bncr版本':
             if (!(await s.isAdmin())) return;
-            await s.reply(await sysDB.get('Version'));
+            await s.reply(`bncr版本:${await sysDB.get('Version')}`);
             break;
         case 'time':
             await s.reply(sysMethod.getTime('yyyy-MM-dd hh:mm:ss'));
