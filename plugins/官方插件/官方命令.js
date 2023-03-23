@@ -7,7 +7,7 @@
  * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
  * @rule ^(重启|bncr版本|启动时间|机器码)$
  * @rule ^(编辑测试|撤销测试|推送消息测试|来个图片|来个视频|推送图片测试|推送管理员测试)$
- * @rule ^(监听该群|屏蔽该群|回复该群|不回复该群)$
+ * @rule ^(监听该群|屏蔽该群|回复该群|不回复该群|拉黑这个b|拉出小黑屋)$
  * @rule ^(eval) ([^\n]+)$
  * @rule ^(name|time|我的id|群id)$
  * @rule ^(等待) ([^ \n]+)$
@@ -19,13 +19,11 @@
  * @disable false
  */
 
-
-module.exports = async sender => {
+module.exports = async s => {
     /* HideStart */
     const path = require('path');
-    let s = sender;
-    let sysDB = new BncrDB('system');
-    let param1 = s.param(1),
+    let sysDB = new BncrDB('system'),
+        param1 = s.param(1),
         param2 = s.param(2),
         param3 = s.param(3),
         param4 = s.param(4),
@@ -109,6 +107,7 @@ module.exports = async sender => {
             await s.reply(groupId);
             break;
         case 'get':
+            console.log(await s.isAdmin());
             if (!(await s.isAdmin())) return;
             try {
                 if (!param2 || !param3) return;
@@ -127,7 +126,7 @@ module.exports = async sender => {
             let db = new BncrDB(param2);
             let nowVal = await db.get(param3, '');
             await s.reply(await db.set(param3, param4, { def: '设置成功，你可以在30秒内“撤销”操作！' }));
-            let input = await s.waitInput(() => { }, 30);
+            let input = await s.waitInput(() => {}, 30);
             if (!input) return;
             else if (input.getMsg() === '撤销') input.reply(await db.set(param3, nowVal, { def: '已撤销' }));
             else s.inlineSugar(input.getMsg()); //代替用户发送消息至框架内部，
@@ -137,7 +136,7 @@ module.exports = async sender => {
             if (!(await s.isAdmin())) return;
             if (!param2 || !param3) return;
             await s.reply(`确认删除[${param2} ${param3}]?\n确认回复y,其他任意值取消`);
-            let YoN = await s.waitInput(() => { }, 60);
+            let YoN = await s.waitInput(() => {}, 60);
             if (YoN && YoN.getMsg() === 'y') return await s.reply(await new BncrDB(param2).del(param3, '成功'));
             return s.reply('已取消');
             break;
@@ -185,45 +184,50 @@ module.exports = async sender => {
             /* 发送本地文件 : qqwx 支持本机url地址发送，tgBot和人行必须要文件绝对路径*/
             if (s.getFrom() === 'tgBot' || s.getFrom() === 'HumanTG')
                 jpgURL = path.join(process.cwd(), `BncrData/public/OIP-C.jpg`);
-            else
-                jpgURL = `http://192.168.31.192:9090/public/OIP-C.jpg`;
+            else jpgURL = `http://192.168.31.192:9090/public/OIP-C.jpg`;
 
             await s.reply({
                 type: 'image',
                 /* 发送网络图片 */
                 path: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg',
-                msg: '图来啦~'
+                msg: '图来啦~',
                 // msg: jpgURL,
             });
 
             break;
         case '来个视频':
-            console.log(await s.reply({
-                type: 'video',
-                /* 发送网络视频 */
-                path: 'https://txmov2.a.yximgs.com/upic/2020/02/21/10/BMjAyMDAyMjExMDUwNDFfMzc0ODkwODM4XzIzODI0NzAzNjIxXzFfMw==_b_Bfa350be2d39dac0304141571e8ab92ed.mp4',
-                msg: '视频来啦~'
-            }));
+            console.log(
+                await s.reply({
+                    type: 'video',
+                    /* 发送网络视频 */
+                    path: 'https://txmov2.a.yximgs.com/upic/2020/02/21/10/BMjAyMDAyMjExMDUwNDFfMzc0ODkwODM4XzIzODI0NzAzNjIxXzFfMw==_b_Bfa350be2d39dac0304141571e8ab92ed.mp4',
+                    msg: '视频来啦~',
+                })
+            );
             break;
         case '推送消息测试':
             //推送消息
-            await sysMethod.push({
-                platform: 'tgBot',
-                groupId: `0`,
-                userId: `1629887728`,
-                msg: '这是一条推送消息',
-            });
+            console.log(
+                await sysMethod.push({
+                    platform: 'HumanTG',
+                    groupId: `0`,
+                    userId: `1206714725`,
+                    msg: '这是一条推送消息',
+                })
+            );
             break;
         case '推送图片测试':
             //推送消息
-            console.log(await sysMethod.push({
-                platform: 'tgBot',
-                groupId: `0`,
-                userId: `1629887728`,
-                msg: '这是一条推送的图片消息',
-                path: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg?source=1940ef5c',
-                type: 'image'
-            }));
+            console.log(
+                await sysMethod.push({
+                    platform: 'tgBot',
+                    groupId: `0`,
+                    userId: `1629887728`,
+                    msg: '这是一条推送的图片消息',
+                    path: 'https://pic3.zhimg.com/v2-58d652598269710fa67ec8d1c88d8f03_r.jpg?source=1940ef5c',
+                    type: 'image',
+                })
+            );
             break;
         case '推送管理员测试':
             sysMethod.pushAdmin({

@@ -50,8 +50,6 @@ module.exports = async s => {
             msgId && (logs += `消息id:  \`${msgId}\`\n`);
             if (replyToMsgId) {
                 let info = await s.Bridge.getReplySendInfo(ChatID, replyToMsgId);
-                // console.log('info', info);
-                // console.log('senderInfo?.bot', info?.bot);
                 logs += `\n> 被回复的消息ID详细信息:\n`;
                 info?.bot && (logs += `是否bot: ${info?.bot}\n`);
                 info?.id && (logs += `用户id:  \`${info?.id.toString()}\`\n`);
