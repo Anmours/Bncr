@@ -69,11 +69,11 @@ module.exports = async s => {
                 timeoutMs: 2 * 60 * 1000,
             };
             logs += '会话出现错误,尝试重新创建会话...\n';
+            if (maxNum === 1) logs += '如果持续出现错误,请考虑accessToken是否过期,或者在控制台查看错误!\n';
             console.log('ChatGPT.js:', e);
             await sysMethod.sleep(1);
         }
-        if (maxNum === 1) logs += '如果持续出现错误,请考虑accessToken是否过期,或者在控制台查看错误!\n';
-    } while (maxNum-- > 0);
+    } while (maxNum-- > 1);
     if (!logs) return;
     await s.reply(`触发消息:${s.getMsg()}\n\n${logs}`);
     console.log('res', res);
