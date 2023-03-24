@@ -74,7 +74,9 @@ module.exports = async () => {
     /* 向指定用户发送信息 */
     pushChat && (await client.sendMessage(pushChat, { message: startLog, parseMode: 'md' }));
     let botid = sysMethod.config.tgBot?.token?.split(':')[0];
-    // await client.getDialogs({});
+    try {
+        await client.getDialogs({});
+    } catch {}
     /* 监听消息 */
     client.addEventHandler(async event => {
         /* 空消息拒收 */
