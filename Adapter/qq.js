@@ -2,7 +2,7 @@
  * This file is part of the App project.
  * @author Aming
  * @name qq
- * @origin 官方
+ * @origin Bncr团队
  * @version 1.0.0
  * @description qq机器人适配器
  * @adapter true

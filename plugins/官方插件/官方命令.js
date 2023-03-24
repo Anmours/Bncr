@@ -1,7 +1,7 @@
 /**
  * @author Aming
  * @name 官方命令
- * @origin 官方
+ * @origin Bncr团队
  * @version 1.0.6
  * @description 官方命令
  * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
@@ -110,13 +110,14 @@ module.exports = async s => {
             await s.reply(groupId);
             break;
         case 'get':
-            console.log(await s.isAdmin());
+            // console.log(await s.isAdmin());
             if (!(await s.isAdmin())) return;
             try {
                 if (!param2 || !param3) return;
                 let val = await new BncrDB(param2).get(param3, '空值');
+                console.log('val',val);
                 typeof val === 'object' ? (val = JSON.stringify(val)) : val;
-                await s.reply(val);
+                await s.reply(val.toString());
             } catch (e) {
                 await s.reply(e.toString());
             }

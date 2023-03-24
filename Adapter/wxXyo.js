@@ -2,7 +2,7 @@
  * This file is part of the Bncr project.
  * @author Anmour
  * @name wxXyo
- * @origin 官方
+ * @origin Bncr团队
  * @version 1.0.0
  * @description wxXyo适配器
  * @adapter true

@@ -2,7 +2,7 @@
  * This file is part of the App project.
  * @author Aming
  * @name tgBot
- * @origin 官方
+ * @origin Bncr团队
  * @version 1.0.0
  * @description tgBot适配器
  * @adapter true

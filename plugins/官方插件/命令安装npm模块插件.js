@@ -1,7 +1,7 @@
 /**
  * @author Aming
  * @name 命令安装npm模块插件
- * @origin 官方
+ * @origin Bncr团队
  * @version 1.0.0
  * @description 命令安装npm模块插件
  * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
