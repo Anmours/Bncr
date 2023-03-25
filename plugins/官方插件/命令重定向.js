@@ -23,9 +23,7 @@ module.exports = async s => {
     };
     if (rule === 'bncr重定向列表') {
         let logs = `重定向列表:\n`;
-        for (const e of Object.keys(setInfo)) {
-            logs += `${e}=>${setInfo[e]}\n`;
-        }
+        for (const e of Object.keys(setInfo)) logs += `${e}=>${setInfo[e]}\n`;
         s.delMsg(await s.reply(logs), { wait: 10 });
         return;
     }
