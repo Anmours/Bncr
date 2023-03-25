@@ -13,8 +13,10 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited
  */
 
-module.exports = () => {
+module.exports = async () => {
     if (!sysMethod.config.tgBot.enable) return sysMethod.startOutLogs('未启用tgBot 退出.');
+    /* 补全依赖 */
+    await sysMethod.testModule(['node-telegram-bot-api'], { install: true });
     const TelegramBot = require(`node-telegram-bot-api`);
     // const Agent = require('socks5-https-client/lib/Agent');
     const Token = sysMethod.config.tgBot.token;

@@ -22,6 +22,9 @@ module.exports = async () => {
         throw new Error('HumanTG登录超时,放弃加载该适配器');
     }, 2 * 60 * 1000);
 
+    /* 补全依赖 */
+    await sysMethod.testModule(['telegram', 'input'], { install: true });
+
     const HumanTG = new Adapter('HumanTG'),
         { StringSession } = require('telegram/sessions'),
         { Api, TelegramClient } = require('telegram'),

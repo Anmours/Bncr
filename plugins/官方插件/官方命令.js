@@ -13,6 +13,7 @@
  * @rule ^(等待) ([^ \n]+)$
  * @rule ^(get|del) ([^ \n]+) ([^ \n]+)$
  * @rule ^(set) ([^ \n]+) ([^ \n]+) ([^ \n]+)$
+ * @rule ^(npm i) ([^\n]+)$
  * @admin false
  * @public false
  * @priority 9999
@@ -33,6 +34,11 @@ module.exports = async s => {
         from = s.getFrom();
     /* HideEnd */
     switch (param1) {
+        case 'npm i':
+            await s.reply(`去安装模块:\n${s.param(2)}\n\n安装中......`);
+            let resStr = await sysMethod.npmInstall(s.param(2))
+            s.reply(`命令:\n${s.getMsg()}\n安装日志:\n${resStr.data}`);
+            break;
         case '监听该群':
             if (!(await s.isAdmin())) return;
             if (!groupId || groupId === '0') return s.reply('非群组禁用');
@@ -60,16 +66,20 @@ module.exports = async s => {
             break;
         case '拉黑这个b':
             if (!(await s.isAdmin())) return;
-            if (from !== 'HumanTG') return s.reply('非HumanTG禁用')
-            if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id')
+            if (from !== 'HumanTG') return s.reply('非HumanTG禁用');
+            if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id');
             if (+groupId) return s.reply('群组禁用，该功能只能对私聊使用');
-            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, true, { def: '已拉黑这个b' }));
+            return s.reply(
+                await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, true, { def: '已拉黑这个b' })
+            );
             break;
         case '拉出小黑屋':
             if (!(await s.isAdmin())) return;
-            if (from !== 'HumanTG') return s.reply('非HumanTG禁用')
-            if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id')
-            return s.reply(await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, false, { def: '拉出小黑屋ok' }));
+            if (from !== 'HumanTG') return s.reply('非HumanTG禁用');
+            if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id');
+            return s.reply(
+                await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, false, { def: '拉出小黑屋ok' })
+            );
             break;
         case '重启':
             if (!(await s.isAdmin())) return;
@@ -115,7 +125,7 @@ module.exports = async s => {
             try {
                 if (!param2 || !param3) return;
                 let val = await new BncrDB(param2).get(param3, '空值');
-                console.log('val',val);
+                console.log('val', val);
                 typeof val === 'object' ? (val = JSON.stringify(val)) : val;
                 await s.reply(val.toString());
             } catch (e) {

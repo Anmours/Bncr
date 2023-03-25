@@ -96,6 +96,20 @@ sysMethod.cron.newCron('0 0 8 * * *', () => {
 });
 ```
 
+### sysMethod.npmInstall 安装 npm 包
+
+```js
+await sysMethod.npmInstall('request'); //会返回执行信息String
+await sysMethod.npmInstall('request', { outConsole: true }); // 将会在控制台实时打印安装情况，返回结果为null
+```
+
+### sysMethod.testModule 测试npm包是否存在
+
+```js
+await sysMethod.testModule(['telegram', 'input']); //将只测试，返回结果
+await sysMethod.testModule(['telegram', 'input'], { install: true }); //发现少模块自动安装
+```
+
 #### sysMethod.cron.isCron(string)
 
 判断字符串是否是定时表达式

@@ -25,6 +25,8 @@ ai 清空上下文将清空会话,重新创建新的会话
 let api = {};
 
 module.exports = async s => {
+    /* 补全依赖 */
+    await sysMethod.testModule(['chatgpt'], { install: true });
     const chatGPTStorage = new BncrDB('ChatGPT');
     const accessToken = await chatGPTStorage.get('Token');
     if (!accessToken) return s.reply("请使用命令'set ChatGPT Token ?,设置ChatGPT的accessToken");
@@ -54,7 +56,7 @@ module.exports = async s => {
     let res = {},
         maxNum = 5,
         logs = ``;
-
+    s.reply(`Let me see...`);
     do {
         try {
             res = await api.sendMessage(s.param(1), opt);
@@ -75,8 +77,8 @@ module.exports = async s => {
         }
     } while (maxNum-- > 1);
     if (!logs) return;
-    await s.reply(`触发消息:${s.getMsg()}\n\n${logs}`);
-    console.log('res', res);
+    await s.reply(`触发消息:\n${s.getMsg()}\n\n${logs}`);
+    // console.log('res', res);
     if (!res?.parentMessageId && !res?.conversationId) return;
     /* 存储上下文 */
     await chatGPTStorage.set(`${platform}:${userId}`, {
