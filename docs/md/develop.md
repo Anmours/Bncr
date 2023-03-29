@@ -96,6 +96,15 @@ sysMethod.cron.newCron('0 0 8 * * *', () => {
 });
 ```
 
+#### sysMethod.cron.isCron(string)
+
+判断字符串是否是定时表达式
+
+```javascript
+sysMethod.cron.isCron('0 0 8 * * *'); //true
+sysMethod.cron.isCron('* * *'); //false
+```
+
 ### sysMethod.npmInstall 安装 npm 包
 
 ```js
@@ -110,14 +119,6 @@ await sysMethod.testModule(['telegram', 'input']); //将只测试，返回结果
 await sysMethod.testModule(['telegram', 'input'], { install: true }); //发现少模块自动安装
 ```
 
-#### sysMethod.cron.isCron(string)
-
-判断字符串是否是定时表达式
-
-```javascript
-sysMethod.cron.isCron('0 0 8 * * *'); //true
-sysMethod.cron.isCron('* * *'); //false
-```
 
 ### sysMethod.inline(string)
 

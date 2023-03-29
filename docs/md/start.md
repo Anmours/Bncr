@@ -10,16 +10,18 @@
 
 `plugins` 插件目录，自带一些官方插件
 
+# 管理员命令没反应？群聊不回复群友？  
+参见 [**常见问题Q&A**](/help/Q&A.md)
+
 # 基础命令
 ```js
-//设置qq管理员 其他平台类似
-set qq admin 12345698
-//获取数据库
+//获取数据库数据
 get 表 key
 //例如获取管理员
 get qq admin
 // 设置数据库
 set 表 key value
+set system name Anmour
 // 重启机器
 重启
 //获取时间
@@ -44,3 +46,19 @@ bncr版本
 回复该群
 
 ```
+
+
+# 其他命令
+其他命令要视插件情况而定,具体问队友插件作者
+
+# 关于报错!
+
+## Error: Cannot find module 'xxxxx'  
+统一为缺少npm模块,通过管理员对机器人发送 npm i xxxx 命令安装模块后重启即可解决
+
+## Error: Cannot find module './xxxxx' 
+统一为缺少自定义模块,谁写的插件找谁要这些模块,一般对应的插件仓库都有的,是你没装好!
+
+## 插件[xxxx.js]加载异常 未设置xxxx
+未设置@name|@rule|@version|@admin|@author|@origin
+这种情况一般是你的插件放错位置了,比如红灯区的插件,全部放在/plugins/红灯区/下,没有这个目录就新建!
