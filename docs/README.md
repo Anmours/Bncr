@@ -34,7 +34,7 @@ _
 
 
 # 安装
-参见 [安装文档](/docs/md/init.md)
+参见 [安装文档](/md/init.md)
 
 # 开发
 
@@ -46,7 +46,7 @@ _
  [Github](https://github.com/Anmours/Bncr)   
  [TG频道](https://t.me/BncrJS)  
  [TG群组](https://t.me/BncrJSChat)  
- [赞助列表](/docs/sponsors.md)
+ [赞助列表](/sponsors.md)
 
 
 ## 请喝茶 ?
