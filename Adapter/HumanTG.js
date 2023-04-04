@@ -13,7 +13,6 @@
  * Unauthorized copying of this file, via any medium is strictly prohibited
  */
 
-
 module.exports = () => {
     const sysDB = new BncrDB('system');
     if (!sysMethod.config.HumanTG.enable) return sysMethod.startOutLogs('未启用HumanTG 退出.');
@@ -126,7 +125,7 @@ module.exports = () => {
                 // console.log('sendID', sendID);
                 if (replyInfo.type === 'text') {
                     /* 编辑消息 */
-                    if (replyInfo.userId === loginUserInfo.id.toString()) {
+                    if (!replyInfo?.dontEdit && replyInfo.userId === loginUserInfo.id.toString()) {
                         try {
                             // throw new Error('')   //取消注释此行代码为直接发送消息,不编辑
                             sendRes = await client.editMessage(sendID, {
