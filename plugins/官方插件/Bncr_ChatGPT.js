@@ -32,7 +32,10 @@ module.exports = async s => {
     if (!accessToken) return s.reply("请使用命令'set ChatGPT Token ?,设置ChatGPT的accessToken");
     if (!api?.sendMessage) {
         const { ChatGPTUnofficialProxyAPI } = await import('chatgpt');
-        api = new ChatGPTUnofficialProxyAPI({ accessToken });
+        api = new ChatGPTUnofficialProxyAPI({
+            accessToken,
+            apiReverseProxyUrl: 'https://bypass.churchless.tech/api/conversation'
+        });
         console.log('初始化ChatGPT...');
     }
     let platform = s.getFrom(),
