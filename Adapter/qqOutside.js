@@ -8,7 +8,7 @@
  * @adapter true
  * @public false
  * @disable false
- * @priority 100
+ * @priority 10000
  * @Copyright ©2023 Aming and Anmours. All rights reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  */
@@ -18,7 +18,7 @@ module.exports = async () => {
     let qq = new Adapter('qq');
     if (sysMethod.config.qqBot_Outside.mode === 'ws') await ws(qq);
     else if (sysMethod.config.qqBot_Outside.mode === 'http') await http(qq);
-
+    // console.log('qq适配器..', qq);
     return qq;
 };
 
@@ -27,11 +27,12 @@ async function ws(qq) {
     const eventS = new events.EventEmitter();
     const { randomUUID } = require('crypto');
     const listArr = [];
-    /* ws监听地址  ws://192.168.31.192:9090/api/qq/ws */
+    /* ws监听地址  ws://192.168.31.192:9090/api/qq/qqws */
     router.ws('/api/bot/qqws', ws => {
         ws.on('message', msg => {
             const body = JSON.parse(msg);
             /* 拒绝心跳链接消息 */
+            // console.log('收到ws请求', body);
             if (body.post_type === 'meta_event') return;
             // console.log('收到ws请求', body);
             if (body.echo) {
@@ -56,6 +57,8 @@ async function ws(qq) {
             qq.receive(msgInfo);
         });
 
+        // console.log('qq适配器..', qq);
+
         /* 发送消息方法 */
         qq.reply = async function (replyInfo) {
             try {
@@ -75,7 +78,7 @@ async function ws(qq) {
                 } else if (replyInfo.type === 'video') {
                     body.params.message = `[CQ:video,file=${replyInfo.path}]`;
                 }
-                // console.log(body);
+                // console.log('推送消息运行了', body);
                 ws.send(JSON.stringify(body));
                 return new Promise((resolve, reject) => {
                     listArr.push({ uuid, eventS });
@@ -100,7 +103,7 @@ async function ws(qq) {
 
         /* 推送消息 */
         qq.push = async function (replyInfo) {
-            // console.log(replyInfo);
+            // console.log('replyInfo', replyInfo);
             return await this.reply(replyInfo);
         };
 
@@ -125,7 +128,7 @@ async function ws(qq) {
     });
 
     /**向/api/系统路由中添加路由 */
-    router.get('api/bot/qqws', (req, res) =>
+    router.get('/api/bot/qqws', (req, res) =>
         res.send({ msg: '这是Bncr 外置qq Api接口，你的get请求测试正常~，请用ws交互数据' })
     );
     router.post('/api/bot/qqws', async (req, res) =>
@@ -185,9 +188,9 @@ async function http(qq) {
             if (replyInfo.type === 'text') {
                 body.message = replyInfo.msg;
             } else if (replyInfo.type === 'image') {
-                body.message = `[CQ:image,file=${replyInfo.path}]`;
+                body.message = `[CQ:image,file=${replyInfo.msg}]`;
             } else if (replyInfo.type === 'video') {
-                body.message = `[CQ:video,file=${replyInfo.path}]`;
+                body.message = `[CQ:video,file=${replyInfo.msg}]`;
             }
             let sendRes = await requestPost(action, body);
             return sendRes ? sendRes.message_id : '0';

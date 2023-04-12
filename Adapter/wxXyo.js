@@ -55,7 +55,7 @@
                     groupName: '',
                     msg: body.content.msg || '',
                     msgId: body.content.msg_id || '',
-                    type: `Social`,
+                    fromType: `Social`,
                 };
                 //群
             } else if (body.Event === 'EventGroupChat') {
@@ -66,7 +66,7 @@
                     groupName: body.content.from_group_name || '',
                     msg: body.content.msg || '',
                     msgId: body.content.msg_id || '',
-                    type: `Social`,
+                    fromType: `Social`,
                 };
             }
             msgInfo && wxXyo.receive(msgInfo);

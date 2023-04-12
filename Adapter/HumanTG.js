@@ -3,7 +3,7 @@
  * @author Aming
  * @name HumanTG
  * @origin Bncr团队
- * @version 1.0.4
+ * @version 1.0.5
  * @description 适配器
  * @adapter true
  * @public false
@@ -77,6 +77,12 @@ module.exports = () => {
         if (newSession !== session) await HumanTgDb.set('session', newSession); //保存登录session
         /* 获取登录的账号信息 */
         const loginUserInfo = await client.getMe();
+        /* 心跳检测 */
+        sysMethod.cron.newCron(`0 */1 * * * *`, async () => {
+            try {
+                await client.getMe();
+            } catch {}
+        });
         /* 保存管理员信息 ，如果需要手动设置管理员 注释这句*/
         HumanTgDb.set('admin', loginUserInfo.id.toString());
         // console.log(loginUserInfo);
@@ -119,10 +125,10 @@ module.exports = () => {
         }, new NewMessage());
 
         HumanTG.reply = async function (replyInfo) {
+            // console.log('replyInfo',replyInfo);
             try {
                 let sendRes = null,
                     sendID = +replyInfo.groupId || +this?.msgInfo?.friendId || +replyInfo.userId;
-                // console.log('sendID', sendID);
                 if (replyInfo.type === 'text') {
                     /* 编辑消息 */
                     if (!replyInfo?.dontEdit && replyInfo.userId === loginUserInfo.id.toString()) {
@@ -134,7 +140,7 @@ module.exports = () => {
                             });
                             return (sendRes && `${sendRes.id}`) || '';
                         } catch (e) {
-                            // console.log(e);
+                            console.log(e);
                         }
                     }
                     /* 编辑消息失败直接发送信息 */
@@ -163,15 +169,14 @@ module.exports = () => {
             }
         };
         HumanTG.delMsg = async function (msgidArr) {
-            if (!msgidArr.length) return;
+            if (!Array.isArray(msgidArr) || !msgidArr.length) return;
             let delChatId = +this.msgInfo.groupId || +this.msgInfo.userId;
-            if (this.msgInfo.userId === loginUserInfo.id.toString()) {
-                let arr = [];
-                for (const e of msgidArr) arr.push(+e);
-                await client.deleteMessages(delChatId, arr, { revoke: true });
-            } else {
-                //...
-            }
+            if (this.msgInfo.userId !== loginUserInfo.id.toString()) return;
+            await client.deleteMessages(
+                delChatId,
+                msgidArr.map(e => +e),
+                { revoke: true }
+            );
         };
         HumanTG.push = async function (replyInfo) {
             return this.reply(replyInfo);

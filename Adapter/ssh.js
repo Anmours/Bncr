@@ -3,7 +3,7 @@
  * @author Aming
  * @name ssh
  * @origin Bncr团队
- * @version 1.0.0
+ * @version 1.0.1
  * @description ssh控制台适配器
  * @adapter true
  * @public false
@@ -43,7 +43,7 @@ module.exports = () => {
                             groupName: '',
                             msg: input,
                             msgId: randomUUID().split('-')[4],
-                            type: 'ssh',
+                            fromType: 'ssh',
                         });
                         break;
                 }

@@ -3,7 +3,7 @@
  * @author Aming
  * @name tgBot
  * @origin Bncr团队
- * @version 1.0.0
+ * @version 1.0.1
  * @description tgBot适配器
  * @adapter true
  * @public false
@@ -49,7 +49,7 @@ module.exports = async () => {
             }
             return send ? `${send.chat.id}:${send.message_id}` : '0';
         } catch (e) {
-            console.error('tg发送消息失败', e);
+            console.error('tg发送消息失败....');
         }
     };
     /* 推送方法 */
@@ -89,7 +89,7 @@ module.exports = async () => {
                 groupName: req['group_name'] || '',
                 msg: req['text'] || '',
                 msgId: `${req['chat']['id']}:${req['message_id']}` || '',
-                type: `Social`,
+                fromType: `Social`,
             };
             // console.log('tg最终消息：', msgInfo);
             tg.receive(msgInfo);

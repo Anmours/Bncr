@@ -24,7 +24,7 @@ module.exports = async () => {
     let qq = new Adapter('qq');
     /* 补全依赖 */
     await sysMethod.testModule(['oicq'], { install: true });
-    const { createClient } = require('');
+    const { createClient } = require('oicq');
     const account = sysMethod.config.qqBot.qqId;
     const client = createClient(account, {
         data_dir: path.join(process.cwd(), 'BncrData/db/qqdata'),

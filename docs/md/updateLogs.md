@@ -51,3 +51,25 @@ ws://bncrip:9090/api/qq/ws    ->   ws://bncrip:9090/api/bot/qqws
 
 * 更新此版本 需要更新配套适配器，清空Adapter文件夹更新，或者更新后自行在Github下载替换  
 官方命令、命令重定向、Bncr_ChatGPT、HumanTG_Expand 均有更新，同上
+
+# 1.0.5
+## 优化其他逻辑
+
+* qq平台ws链接命令重启后收不到重启成功的消息
+* 取消凌晨重新鉴权，现在只有启动时会鉴权(防止掉超授)
+* 为了满足特殊需求，新增改运行端口功能，命令:set system port 9091，不设置默认是9090。正常情况不需要设置端口，改容器外部端口即可
+
+# 1.0.6
+## 优化性能
+
+# 1.0.7
+## 优化性能
+## 优化适配器逻辑
+现在消息接收器中的tpye与reply中的type冲突了,这个版本接收器的 tpye-> fromType
+更新此版本需要删除wx的适配器,更新后会自动补全新的适配器
+## 新增一个调用其他适配器的方法,增加可玩性
+sysMethod.Adapters(msgInfo,'tgBot','delMsg', 参数)
+等同于tgBot触发的插件内调用sender.delMsg(参数)
+msgInfo格式可在插件内打印sender.msgInfo查看
+基于此次更新可以实现不同平台插件之间互相流转
+

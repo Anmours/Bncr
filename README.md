@@ -4,7 +4,7 @@
 
 <font size=4>它拥有无限可能，我愿称之为 **《无界》**.</font>
 
-[开发文档](https://anmours.github.io/Bncr) | [Github](https://github.com/Anmours/Bncr) | [TG频道](https://t.me/red_Lights_District) |  [赞助列表](./sponsors.md)
+[开发文档](https://anmours.github.io/Bncr) | [Github](https://github.com/Anmours/Bncr) | [TG频道](https://t.me/BncrJS) |  [赞助列表](./sponsors.md)
 
 
 

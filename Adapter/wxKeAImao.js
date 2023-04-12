@@ -3,7 +3,7 @@
  * @author Aming
  * @name wxKeAImao
  * @origin Bncr团队
- * @version 1.0.0
+ * @version 1.0.1
  * @description wxKeAImao适配器
  * @adapter true
  * @public false
@@ -93,7 +93,7 @@ module.exports = async () => {
                 groupName: body.event === 'EventGroupMsg' ? body.from_name : '',
                 msg: body.msg || '',
                 msgId: body.msgid || '',
-                type: `Social`,
+                fromType: `Social`,
             };
             // console.log('msgInfo:', msgInfo);
             wxKeAImao.receive(msgInfo);

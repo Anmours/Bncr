@@ -148,6 +148,10 @@ sysMethod.push({
     type: 'text',
 });
 ```
+### sysMethod.Adapters(msgInfo,'tgBot','delMsg', 参数) 1.0.7增
+等同于tgBot触发的插件内调用sender.delMsg(参数)
+msgInfo格式可在插件内打印sender.msgInfo查看
+基于此次更新可以实现不同平台插件之间互相流转工作流
 
 ### sysMethod.pushAdmin(pushInfo)
 

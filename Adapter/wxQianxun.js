@@ -3,7 +3,7 @@
  * @author Aming
  * @name wxQianxun
  * @origin Bncr团队
- * @version 1.0.0
+ * @version 1.0.1
  * @description wxQianxun适配器
  * @adapter true
  * @public false
@@ -54,7 +54,7 @@ module.exports = async () => {
                     groupName: '',
                     msg: body.data.data.msg || '',
                     msgId: body.data.data.msgBase64 || '',
-                    type: `Social`,
+                    fromType: `Social`,
                 };
                 //群
             } else if (body.event === 10008 && body.data.data.fromType === 2) {
@@ -65,7 +65,7 @@ module.exports = async () => {
                     groupName: '',
                     msg: body.data.data.msg || '',
                     msgId: body.data.data.msgBase64 || '',
-                    type: `Social`,
+                    fromType: `Social`,
                 };
             }
             msgInfo && wxQianxun.receive(msgInfo);
