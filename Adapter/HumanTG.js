@@ -83,8 +83,11 @@ module.exports = () => {
                 await client.getMe();
             } catch {}
         });
-        /* 保存管理员信息 ，如果需要手动设置管理员 注释这句*/
-        HumanTgDb.set('admin', loginUserInfo.id.toString());
+        /* 保存管理员信息 ，注释这句*/
+        if (!(await HumanTgDb.get('admin'))) {
+            HumanTgDb.set('admin', loginUserInfo.id.toString());
+        }
+
         // console.log(loginUserInfo);
 
         let startLog = `Hello ${loginUserInfo.firstName || loginUserInfo.username}\n`;
@@ -169,6 +172,9 @@ module.exports = () => {
             }
         };
         HumanTG.delMsg = async function (msgidArr) {
+            // console.log('this', this);
+            // console.log('msgidArr', msgidArr);
+            // return;
             if (!Array.isArray(msgidArr) || !msgidArr.length) return;
             let delChatId = +this.msgInfo.groupId || +this.msgInfo.userId;
             if (this.msgInfo.userId !== loginUserInfo.id.toString()) return;
