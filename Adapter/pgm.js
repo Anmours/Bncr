@@ -28,13 +28,8 @@ module.exports = async () => {
                 for (const e of listArr) {
                     if (body.echo !== e.uuid) continue;
                     if (body.status && body.status === 'ok')
-                        e.eventS.emit(e.uuid, msg_id + ":" + chat_id);
-                    else e.eventS.emit(e.uuid, '');
-                    break;
-                }
-                // 忽略此回复消息
-                if (body.ignore) {
-                    return
+                        return e.eventS.emit(e.uuid, msg_id + ":" + chat_id);
+                    else return e.eventS.emit(e.uuid, '');
                 }
             }
 
@@ -100,7 +95,6 @@ module.exports = async () => {
                     body.params.reply_to_message_id = parseInt(replyInfo.msgId.split(":")[0]);
                 else
                     body.params.reply_to_message_id = parseInt(replyInfo.toMsgId.split(":")[0]);
-                body.params.ignore = replyInfo.ignore;
                 body.params.message = replyInfo.msg;
                 if (!replyInfo.type || replyInfo.type === "text") {
                     body.params.type = "text";
