@@ -104,6 +104,7 @@ module.exports = async () => {
                 body.params.message = replyInfo.msg;
                 if (!replyInfo.type || replyInfo.type === "text") {
                     body.params.type = "text";
+                    // console.log("msgInfo: " + JSON.stringify(this.msgInfo))
                     body.params.do_edit = replyInfo.botId.toString() === replyInfo.userId ?
                         !replyInfo.dontEdit : false;
                 }
@@ -157,6 +158,29 @@ module.exports = async () => {
             } catch (e) {
                 console.log('pgm撤回消息异常', e);
                 return false;
+            }
+        };
+
+        pgm.Bridge= {
+            editMsgMedia: async function (replyInfo, msgInfo) {
+                if (Object.prototype.toString.call(replyInfo) === '[object Object]') {
+                    let [msgId, chatId] = replyInfo.msgId.split(":");
+                    if (msgInfo.botId.toString() === msgInfo.userId) {
+                        ws.send(
+                            JSON.stringify({
+                                action: 'edit_message_media',
+                                params: {
+                                    message_id: parseInt(msgId),
+                                    chat_id: parseInt(chatId),
+                                    type: replyInfo.type,
+                                    path: replyInfo.path,
+                                    message: replyInfo.msg
+                                },
+                            })
+                        );
+                    } else console.log("没有权限编辑！！！")
+                }
+                return replyInfo.msgId;
             }
         };
 
