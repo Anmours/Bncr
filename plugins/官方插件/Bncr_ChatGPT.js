@@ -34,7 +34,7 @@ module.exports = async s => {
         const { ChatGPTUnofficialProxyAPI } = await import('chatgpt');
         api = new ChatGPTUnofficialProxyAPI({
             accessToken,
-            apiReverseProxyUrl: 'https://bypass.churchless.tech/api/conversation'
+            apiReverseProxyUrl: 'https://chat.gateway.do/api/conversation'
         });
         console.log('初始化ChatGPT...');
     }
