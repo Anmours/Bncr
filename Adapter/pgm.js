@@ -24,6 +24,10 @@ module.exports = async () => {
             let body = JSON.parse(msg);
             let chat_id = body.chat.id;
             let msg_id = body.id;
+            // 忽略编辑的消息
+            if (body.edit_date) {
+                return;
+            }
             if (body.echo) {
                 for (const e of listArr) {
                     if (body.echo !== e.uuid) continue;
@@ -62,15 +66,15 @@ module.exports = async () => {
             let msgInfo = {
                 userId: sender_id.toString() || '',
                 userName: user_name || '',
-                groupId: isGroup === 'True' ? chat_id : '0',
+                groupId: isGroup === 'True' ? chat_id.toString() : '0',
                 groupName: chat_name || '',
                 msg: body.text || '',
                 msgId: msg_id + ":" + chat_id,
                 isGroup: isGroup || "",
                 replyTo: reply_to || "",
                 replyToSenderId: reply_to_sender_id,
-                botId:botId,
-                friendId: chat_id,
+                botId:botId.toString(),
+                friendId: chat_id.toString(),
             };
             // console.log(msgInfo);
             pgm.receive(msgInfo);
@@ -89,8 +93,8 @@ module.exports = async () => {
                     echo: uuid,
                 };
                 +replyInfo.groupId
-                    ? (body.params.chat_id = replyInfo.groupId)
-                    : (body.params.chat_id = replyInfo.friendId);
+                    ? (body.params.chat_id = parseInt(replyInfo.groupId))
+                    : (body.params.chat_id = parseInt(replyInfo.friendId));
                 if (replyInfo.msgId)
                     body.params.reply_to_message_id = parseInt(replyInfo.msgId.split(":")[0]);
                 else
@@ -99,7 +103,7 @@ module.exports = async () => {
                 if (!replyInfo.type || replyInfo.type === "text") {
                     body.params.type = "text";
                     // console.log("msgInfo: " + JSON.stringify(this.msgInfo))
-                    body.params.do_edit = replyInfo.botId.toString() === replyInfo.userId ?
+                    body.params.do_edit = replyInfo.msgId && replyInfo.botId && replyInfo.botId === replyInfo.userId ?
                         !replyInfo.dontEdit : false;
                 }
                 else {
@@ -139,7 +143,7 @@ module.exports = async () => {
         pgm.delMsg = async function (argsArr) {
             try {
                 argsArr.forEach(e => {
-                    if (typeof e !== 'string' && typeof e !== 'number') return false;
+                    if (!e && typeof e !== 'string' && typeof e !== 'number') return false;
                     let [msgId, chatId] = e.split(":")
                     ws.send(
                         JSON.stringify({
@@ -159,7 +163,7 @@ module.exports = async () => {
             editMsgMedia: async function (replyInfo, msgInfo) {
                 if (Object.prototype.toString.call(replyInfo) === '[object Object]') {
                     let [msgId, chatId] = replyInfo.msgId.split(":");
-                    if (msgInfo.botId.toString() === msgInfo.userId) {
+                    if (msgInfo.botId === msgInfo.userId) {
                         ws.send(
                             JSON.stringify({
                                 action: 'edit_message_media',
