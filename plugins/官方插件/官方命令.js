@@ -35,6 +35,7 @@ module.exports = async s => {
     /* HideEnd */
     switch (param1) {
         case 'npm i':
+            if (!(await s.isAdmin())) return;
             await s.reply(`去安装模块:\n${s.param(2)}\n\n安装中......`);
             let resStr = await sysMethod.npmInstall(s.param(2))
             s.reply(`命令:\n${s.getMsg()}\n安装日志:\n${resStr.data}`);

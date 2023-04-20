@@ -73,3 +73,11 @@ sysMethod.Adapters(msgInfo,'tgBot','delMsg', 参数)
 msgInfo格式可在插件内打印sender.msgInfo查看
 基于此次更新可以实现不同平台插件之间互相流转
 
+# 1.0.8
+## 优化性能
+1 适配器的replyInfo现在将携带msgInfo的所有字段，如果sender.reply({})携带了同名的字段将以后者为准
+2 sender.delMsg(...,{wait:0}) 之前为秒撤回，现在0或0以下的数为不撤回
+
+# 1.0.9
+每1分钟压缩一次数据库
+
