@@ -24,10 +24,6 @@ module.exports = async () => {
             let body = JSON.parse(msg);
             let chat_id = body.chat.id;
             let msg_id = body.id;
-            // 忽略编辑的消息
-            if (body.edit_date) {
-                return;
-            }
             if (body.echo) {
                 for (const e of listArr) {
                     if (body.echo !== e.uuid) continue;
@@ -35,6 +31,10 @@ module.exports = async () => {
                         return e.eventS.emit(e.uuid, msg_id + ":" + chat_id);
                     else return e.eventS.emit(e.uuid, '');
                 }
+            }
+            // 忽略编辑的消息
+            if (body.edit_date) {
+                return;
             }
 
             let reply_to = body.id;
@@ -143,8 +143,7 @@ module.exports = async () => {
                             })
                         );
                     } else {
-                        console.log("pgm撤回消息异常", argsArr);
-                        return false;
+                        console.log("pgm撤回消息异常", e);
                     }
                 });
                 return true;
