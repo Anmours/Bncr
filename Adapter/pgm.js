@@ -12,7 +12,7 @@
  */
 
 module.exports = async () => {
-    if (!sysMethod.config.pgm || !sysMethod.config.pgm.enable) return sysMethod.startOutLogs('未启用pgm 退出.');
+    if (!sysMethod.config?.pgm?.enable) return sysMethod.startOutLogs('未启用pgm 退出.');
     const pgm = new Adapter('pgm');
     const events = require('events');
     const eventS = new events.EventEmitter();
@@ -24,44 +24,34 @@ module.exports = async () => {
             let body = JSON.parse(msg);
             let chat_id = body.chat.id;
             let msg_id = body.id;
-            // 忽略编辑的消息
-            if (body.edit_date) {
-                return;
-            }
             if (body.echo) {
                 for (const e of listArr) {
                     if (body.echo !== e.uuid) continue;
-                    if (body.status && body.status === 'ok')
+                    if (body.status === 'ok')
                         return e.eventS.emit(e.uuid, msg_id + ":" + chat_id);
                     else return e.eventS.emit(e.uuid, '');
                 }
             }
+            // 忽略编辑的消息
+            if (body.edit_date) {
+                return;
+            }
 
             let reply_to = body.id;
             let reply_to_sender_id = 0;
-            let sender_id = 0;
+            let sender_id = body.from_user?.id || 0;
             let user_name = "";
             let chat_name = body.chat.title || "";
             let botId = body.bot_id || "0";
             let isGroup = body.is_group || "";
-            if (body.from_user) {
-                user_name = body.from_user.first_name;
-                sender_id = body.from_user.id;
-                if ("last_name" in body.from_user && body.from_user.last_name) {
-                    user_name += "" + body.from_user.last_name;
-                }
-            }
-            reply = body.reply_to_message;
-            if (reply) {
-                reply_to = reply.id
-                if ("from_user" in reply && reply.from_user)
-                    reply_to_sender_id = reply.from_user.id
-            }
-            if ("reply_to_message_id" in body && body.reply_to_message_id)
+            user_name = body.from_user?.first_name || "";
+            user_name += body.from_user?.last_name || "";
+
+            if (body?.reply_to_message_id)
                 reply_to = body.reply_to_message_id
-            if ("reply_to_message" in body && body.reply_to_message)
+            if (body?.reply_to_message)
                 reply_to = body.reply_to_message.id
-            if ("reply_to_message" in body && body.reply_to_message.from_user)
+            if (body?.reply_to_message?.from_user)
                 reply_to_sender_id = body.reply_to_message.from_user.id
             let msgInfo = {
                 userId: sender_id.toString() || '',
@@ -103,7 +93,7 @@ module.exports = async () => {
                 if (!replyInfo.type || replyInfo.type === "text") {
                     body.params.type = "text";
                     // console.log("msgInfo: " + JSON.stringify(this.msgInfo))
-                    body.params.do_edit = replyInfo.msgId && replyInfo.botId && replyInfo.botId === replyInfo.userId ?
+                    body.params.do_edit = replyInfo.msgId && replyInfo?.botId === replyInfo.userId ?
                         !replyInfo.dontEdit : false;
                 }
                 else {
@@ -145,12 +135,16 @@ module.exports = async () => {
                 argsArr.forEach(e => {
                     if (!e && typeof e !== 'string' && typeof e !== 'number') return false;
                     let [msgId, chatId] = e.split(":")
-                    ws.send(
-                        JSON.stringify({
-                            action: 'delete_msg',
-                            params: { message_id: parseInt(msgId), chat_id: parseInt(chatId)},
-                        })
-                    );
+                    if (!isNaN(msgId) && !isNaN(chatId)) {
+                        ws.send(
+                            JSON.stringify({
+                                action: 'delete_msg',
+                                params: { message_id: parseInt(msgId), chat_id: parseInt(chatId)},
+                            })
+                        );
+                    } else {
+                        console.log("pgm撤回消息异常", e);
+                    }
                 });
                 return true;
             } catch (e) {
