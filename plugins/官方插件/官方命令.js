@@ -2,17 +2,17 @@
  * @author Aming
  * @name 官方命令
  * @origin Bncr团队
- * @version 1.0.6
+ * @version 1.0.9
  * @description 官方命令
  * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
- * @rule ^(重启|bncr版本|启动时间|机器码)$
+ * @rule ^(重启|bncr版本|bncr状态|启动时间|机器码)$
  * @rule ^(编辑测试|撤销测试|推送消息测试|来个图片|来个视频|推送图片测试|推送管理员测试)$
  * @rule ^(监听该群|屏蔽该群|回复该群|不回复该群|拉黑这个b|拉出小黑屋)$
  * @rule ^(eval) ([^\n]+)$
  * @rule ^(name|time|我的id|群id)$
  * @rule ^(等待) ([^ \n]+)$
  * @rule ^(get|del) ([^ \n]+) ([^ \n]+)$
- * @rule ^(set) ([^ \n]+) ([^ \n]+) ([^ \n]+)$
+ * @rule ^(set) ([^ \n]+) ([^ \n]+) ([\s\S]+)$
  * @rule ^(npm i) ([^\n]+)$
  * @admin false
  * @public false
@@ -20,9 +20,10 @@
  * @disable false
  */
 
+const fs = require('fs');
+const path = require('path');
+
 module.exports = async s => {
-    /* HideStart */
-    const path = require('path');
     let sysDB = new BncrDB('system'),
         param1 = s.param(1),
         param2 = s.param(2),
@@ -32,12 +33,11 @@ module.exports = async s => {
         userId = s.getUserId(),
         groupId = s.getGroupId(),
         from = s.getFrom();
-    /* HideEnd */
     switch (param1) {
         case 'npm i':
             if (!(await s.isAdmin())) return;
             await s.reply(`去安装模块:\n${s.param(2)}\n\n安装中......`);
-            let resStr = await sysMethod.npmInstall(s.param(2))
+            let resStr = await sysMethod.npmInstall(s.param(2));
             s.reply(`命令:\n${s.getMsg()}\n安装日志:\n${resStr.data}`);
             break;
         case '监听该群':
@@ -71,7 +71,9 @@ module.exports = async s => {
             if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id');
             if (+groupId) return s.reply('群组禁用，该功能只能对私聊使用');
             return s.reply(
-                await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, true, { def: '已拉黑这个b' })
+                await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, true, {
+                    def: '已拉黑这个b',
+                })
             );
             break;
         case '拉出小黑屋':
@@ -79,7 +81,9 @@ module.exports = async s => {
             if (from !== 'HumanTG') return s.reply('非HumanTG禁用');
             if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id');
             return s.reply(
-                await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, false, { def: '拉出小黑屋ok' })
+                await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, false, {
+                    def: '拉出小黑屋ok',
+                })
             );
             break;
         case '重启':
@@ -152,7 +156,8 @@ module.exports = async s => {
             if (!param2 || !param3) return;
             await s.reply(`确认删除[${param2} ${param3}]?\n确认回复y,其他任意值取消`);
             let YoN = await s.waitInput(() => {}, 60);
-            if (YoN && YoN.getMsg() === 'y') return await s.reply(await new BncrDB(param2).del(param3, '成功'));
+            if (YoN && YoN.getMsg() === 'y')
+                return await s.reply(await new BncrDB(param2).del(param3, '成功'));
             return s.reply('已取消');
             break;
         case 'eval':
@@ -191,7 +196,9 @@ module.exports = async s => {
             break;
         case '撤销测试':
             let sendid = await s.reply('即将删除该消息');
+            console.log('sendid', sendid);
             //异步删除消息 挂到后台等待设定的时间，不会阻塞当前进程
+            // console.log('s.getMsgId()',s.getMsgId());
             s.delMsg(s.getMsgId(), sendid, { wait: 5 });
             break;
         case '来个图片':
@@ -250,7 +257,58 @@ module.exports = async s => {
                 msg: `这是通知管理员的消息`,
             });
             break;
+        case 'bncr状态':
+            if (!(await s.isAdmin())) return;
+            let logs = ``,
+                bncrMem = process.memoryUsage(),
+                a = ``,
+                startTimes = await sysDB.get('startTime');
+            for (const e of fs.readdirSync(path.join(process.cwd(), 'BncrData/db'))) {
+                if (e.search('.db') === -1) continue;
+                let dbStat = fs.statSync(path.join(process.cwd(), `BncrData/db/${e}`));
+                a += `${e}: ${Math.floor((dbStat.size / 1024 / 1024) * 100) / 100}MB\n`;
+            }
+            logs += `Bncr版本: ${await sysDB.get('Version')}
+-
+占用内存: ${Math.floor((bncrMem.rss / 1024 / 1024) * 100) / 100}MB
+申请内存: ${Math.floor((bncrMem.heapTotal / 1024 / 1024) * 100) / 100}MB
+使用内存: ${Math.floor((bncrMem.heapUsed / 1024 / 1024) * 100) / 100}MB
+扩展内存: ${Math.floor((bncrMem.external / 1024 / 1024) * 100) / 100}MB
+独立内存: ${Math.floor((bncrMem.arrayBuffers / 1024 / 1024) * 100) / 100}MB
+-
+数据库:
+${a + '-' || '无数据库信息\n-'}
+启动时间: ${startTimes}
+运行时长: ${intervalTime(new Date(startTimes).getTime())}
+`;
+            s.delMsg(await s.reply(logs), { wait: 0 });
+            break;
         default:
             break;
     }
 };
+
+//计算两个时间之间的时间差 多少天时分秒
+function intervalTime(startTime, endTime = new Date().getTime()) {
+    let date = endTime - startTime, //时间差的毫秒数
+        //计算出相差天数
+        days = Math.floor(date / (24 * 3600 * 1000)),
+        //计算出小时数
+        leave1 = date % (24 * 3600 * 1000),
+        //计算天数后剩余的毫秒数
+        hours = Math.floor(leave1 / (3600 * 1000)),
+        //计算相差分钟数
+        leave2 = leave1 % (3600 * 1000),
+        //计算小时数后剩余的毫秒数
+        minutes = Math.floor(leave2 / (60 * 1000)),
+        //计算相差秒数
+        leave3 = leave2 % (60 * 1000),
+        //计算分钟数后剩余的毫秒数
+        seconds = Math.round(leave3 / 1000),
+        logs = ``;
+    days && (logs += `${days}天`);
+    hours && (logs += `${hours}时`);
+    minutes && (logs += `${minutes}分`);
+    seconds && (logs += `${seconds}秒`);
+    return logs;
+}
