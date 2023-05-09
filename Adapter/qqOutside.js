@@ -191,6 +191,8 @@ async function http(qq) {
                 body.message = `[CQ:image,file=${replyInfo.msg}]`;
             } else if (replyInfo.type === 'video') {
                 body.message = `[CQ:video,file=${replyInfo.msg}]`;
+            } else if (replyInfo.type === 'audio') {
+                body.params.message = `[CQ:record,file=${replyInfo.path}]`;
             }
             let sendRes = await requestPost(action, body);
             return sendRes ? sendRes.message_id : '0';

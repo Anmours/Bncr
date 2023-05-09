@@ -105,6 +105,17 @@
                     api: "SendVideoMsg",
                 };
                 break;
+            case 'audio':
+                body = {
+                    to_wxid: to_Wxid,
+                    title: replyInfo?.name || '',
+                    desc: replyInfo?.singer || '',
+                    url: replyInfo?.path || '',
+                    dataurl: replyInfo?.path || '',
+                    thumburl: replyInfo?.img || '',
+                    api: 'SendMusicLinkMsg'
+                };
+                break;
             default:
                 return;
                 break;
