@@ -46,6 +46,19 @@ module.exports = async () => {
                 send = await tgBot.sendPhoto(sendId, replyInfo.path);
             } else if (replyInfo.type === 'video') {
                 send = await tgBot.sendVideo(sendId, replyInfo.path);
+            } else if (replyInfo.type === 'audio') {
+                send = await tgBot.sendAudio(sendId, replyInfo.path, {
+                  title: replyInfo?.name || '',
+                  performer: replyInfo?.singer || ''
+                });
+            } else if (replyInfo.type === 'markdown') {
+                send = await tgBot.sendMessage(sendId, replyInfo.msg, {
+                    parse_mode: 'Markdown'
+                });
+            } else if (replyInfo.type === 'html') {
+                send = await tgBot.sendMessage(sendId, replyInfo.msg, {
+                    parse_mode: 'HTML'
+                });
             }
             return send ? `${send.chat.id}:${send.message_id}` : '0';
         } catch (e) {

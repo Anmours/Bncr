@@ -26,7 +26,21 @@ module.exports = () => {
         }, 2 * 60 * 1000);
 
         /* 补全依赖 */
-        await sysMethod.testModule(['telegram', 'input'], { install: true });
+        await sysMethod.testModule(['telegram', 'input', 'markdown-it'], { install: true });
+
+        // md解析html
+        const md = require('markdown-it')({
+            html: true,
+            xhtmlOut: false,
+            breaks: false,
+            langPrefix: 'language-',
+            linkify: false,
+            typographer: false,
+            quotes: '“”‘’'
+        })
+        // 去除最外层包裹
+        md.renderer.rules.paragraph_open = () => ''
+        md.renderer.rules.paragraph_close = () => ''
 
         const HumanTG = new Adapter('HumanTG'),
             { StringSession } = require('telegram/sessions'),
@@ -164,6 +178,27 @@ module.exports = () => {
                         message: replyInfo?.msg || '',
                         file: replyInfo.path,
                         replyTo: +replyInfo.toMsgId,
+                    });
+                } else if (replyInfo.type === 'audio') {
+                    sendRes = await client.sendMessage(sendID, {
+                        file: replyInfo.path,
+                        replyTo: +replyInfo.toMsgId,
+                        attributes: [
+                          new Api.DocumentAttributeAudio({
+                            title: replyInfo?.name || '',
+                            performer: replyInfo?.singer || ''
+                          })
+                        ]
+                    });
+                } else if (replyInfo.type === 'markdown') {
+                    sendRes = await client.sendMessage(sendID, {
+                        message: md.render(replyInfo.msg),
+                        parseMode: 'html'
+                    });
+                } else if (replyInfo.type === 'html') {
+                    sendRes = await client.sendMessage(sendID, {
+                        message: replyInfo.msg,
+                        parseMode: 'html'
                     });
                 }
                 return (sendRes && `${sendRes.id}`) || '';
