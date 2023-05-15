@@ -4,7 +4,7 @@
  * @origin Bncr团队
  * @version 1.0.0
  * @description 命令安装npm模块插件
- * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
+ * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo pgm
  * @rule ^(npm i|安装模块) ([^\n]+)$
  * @admin true
  * @public false
