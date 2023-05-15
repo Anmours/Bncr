@@ -2,9 +2,9 @@
  * @author Aming
  * @name 官方命令
  * @origin Bncr团队
- * @version 1.0.9
+ * @version 1.1.0
  * @description 官方命令
- * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo
+ * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo pgm
  * @rule ^(重启|bncr版本|bncr状态|启动时间|机器码)$
  * @rule ^(编辑测试|撤销测试|推送消息测试|来个图片|来个视频|推送图片测试|推送管理员测试)$
  * @rule ^(监听该群|屏蔽该群|回复该群|不回复该群|拉黑这个b|拉出小黑屋)$
@@ -67,7 +67,7 @@ module.exports = async s => {
             break;
         case '拉黑这个b':
             if (!(await s.isAdmin())) return;
-            if (from !== 'HumanTG') return s.reply('非HumanTG禁用');
+            if (from !== 'HumanTG' && from !== 'pgm') return s.reply('非HumanTG|pgm禁用');
             if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id');
             if (+groupId) return s.reply('群组禁用，该功能只能对私聊使用');
             return s.reply(
@@ -78,7 +78,7 @@ module.exports = async s => {
             break;
         case '拉出小黑屋':
             if (!(await s.isAdmin())) return;
-            if (from !== 'HumanTG') return s.reply('非HumanTG禁用');
+            if (from !== 'HumanTG' && from !== 'pgm') return s.reply('非HumanTG|pgm禁用');
             if (!+s?.msgInfo?.friendId) return s.reply('未读取到好友id');
             return s.reply(
                 await new BncrDB('userBlacklist').set(`${from}:${s.msgInfo.friendId}`, false, {
@@ -178,7 +178,7 @@ module.exports = async s => {
             break;
         case '编辑测试':
             if (!(await s.isAdmin())) return;
-            if (s.getFrom() === 'HumanTG') {
+            if (from === 'HumanTG' || from === 'pgm') {
                 let log = `编辑中\n`;
                 let logs = ``;
                 for (let i = 0; i < 5; i++) {
