@@ -2,7 +2,7 @@
  * @author Aming
  * @name 官方命令
  * @origin Bncr团队
- * @version 1.1.0
+ * @version 1.1.1
  * @description 官方命令
  * @platform qq ssh HumanTG tgBot wxQianxun wxKeAImao wxXyo pgm
  * @rule ^(重启|bncr版本|bncr状态|启动时间|机器码)$
@@ -148,7 +148,7 @@ module.exports = async s => {
             let input = await s.waitInput(() => {}, 30);
             if (!input) return;
             else if (input.getMsg() === '撤销') input.reply(await db.set(param3, nowVal, { def: '已撤销' }));
-            else s.inlineSugar(input.getMsg()); //代替用户发送消息至框架内部，
+            else input.inlineSugar(input.getMsg()); //代替用户发送消息至框架内部，
 
             break;
         case 'del':
