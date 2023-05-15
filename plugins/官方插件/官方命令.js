@@ -269,19 +269,15 @@ module.exports = async s => {
                 a += `${e}: ${Math.floor((dbStat.size / 1024 / 1024) * 100) / 100}MB\n`;
             }
             logs += `Bncr版本: ${await sysDB.get('Version')}
--
+
 占用内存: ${Math.floor((bncrMem.rss / 1024 / 1024) * 100) / 100}MB
-申请内存: ${Math.floor((bncrMem.heapTotal / 1024 / 1024) * 100) / 100}MB
-使用内存: ${Math.floor((bncrMem.heapUsed / 1024 / 1024) * 100) / 100}MB
-扩展内存: ${Math.floor((bncrMem.external / 1024 / 1024) * 100) / 100}MB
-独立内存: ${Math.floor((bncrMem.arrayBuffers / 1024 / 1024) * 100) / 100}MB
--
+
 数据库:
-${a + '-' || '无数据库信息\n-'}
+${a  || '无数据库信息\n'}
 启动时间: ${startTimes}
 运行时长: ${intervalTime(new Date(startTimes).getTime())}
 `;
-            s.delMsg(await s.reply(logs), { wait: 0 });
+            s.delMsg(await s.reply(logs), { wait: 15 });
             break;
         default:
             break;
