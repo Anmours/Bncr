@@ -8,7 +8,7 @@
  * @adapter true
  * @public false
  * @disable false
- * @priority 3
+ * @priority 200
  */
 
 module.exports = async () => {
@@ -44,6 +44,7 @@ module.exports = async () => {
             let chat_name = body.chat.title || "";
             let botId = body.bot_id || "0";
             let isGroup = body.is_group || "";
+            let msgText = body.text || '';
             user_name = body.from_user?.first_name || "";
             user_name += body.from_user?.last_name || "";
 
@@ -51,6 +52,8 @@ module.exports = async () => {
                 reply_to = body.reply_to_message_id
             if (body?.reply_to_message)
                 reply_to = body.reply_to_message.id
+            if (body?.reply_to_message?.text)
+                msgText += body?.reply_to_message?.text;
             if (body?.reply_to_message?.from_user)
                 reply_to_sender_id = body.reply_to_message.from_user.id
             let msgInfo = {
@@ -58,7 +61,7 @@ module.exports = async () => {
                 userName: user_name || '',
                 groupId: isGroup === 'True' ? chat_id.toString() : '0',
                 groupName: chat_name || '',
-                msg: body.text || '',
+                msg: msgText,
                 msgId: msg_id + ":" + chat_id,
                 isGroup: isGroup || "",
                 replyTo: reply_to || "",
