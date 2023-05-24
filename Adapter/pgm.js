@@ -13,13 +13,14 @@
 
 module.exports = async () => {
     if (!sysMethod.config?.pgm?.enable) return sysMethod.startOutLogs('未启用pgm 退出.');
+    const pgmDB = new BncrDB('pgm');
     const pgm = new Adapter('pgm');
     const events = require('events');
     const eventS = new events.EventEmitter();
     const { randomUUID } = require('crypto');
     const listArr = [];
     router.ws('/api/bot/pgmws', ws => {
-        ws.on('message', msg => {
+        ws.on('message', async msg => {
             // console.log("msg"+msg)
             let body = JSON.parse(msg);
             let chat_id = body.chat.id;
@@ -52,8 +53,12 @@ module.exports = async () => {
                 reply_to = body.reply_to_message_id
             if (body?.reply_to_message)
                 reply_to = body.reply_to_message.id
-            if (body?.reply_to_message?.text)
-                msgText += body?.reply_to_message?.text;
+            if (body?.reply_to_message?.text) {
+                let ignoreWords = await pgmDB.get("ignoreWords");
+                if (!(ignoreWords?.split("&") || [",id", ",re"]).includes(msgText)) {
+                    msgText += body?.reply_to_message?.text;
+                }
+            }
             if (body?.reply_to_message?.from_user)
                 reply_to_sender_id = body.reply_to_message.from_user.id
             let msgInfo = {
@@ -66,7 +71,7 @@ module.exports = async () => {
                 isGroup: isGroup || "",
                 replyTo: reply_to || "",
                 replyToSenderId: reply_to_sender_id,
-                botId:botId.toString(),
+                botId: botId.toString(),
                 friendId: chat_id.toString(),
             };
             // console.log(msgInfo);
