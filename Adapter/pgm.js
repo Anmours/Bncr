@@ -108,6 +108,8 @@ module.exports = async () => {
                     body.params.type = replyInfo.type;
                 } else {
                     body.params.type = replyInfo.type;
+                    body.params.do_edit = replyInfo.msgId && replyInfo?.botId === replyInfo.userId ?
+                        !replyInfo.dontEdit : false;
                 }
 
                 // console.log('推送消息运行了', body);
