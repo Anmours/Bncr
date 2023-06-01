@@ -103,9 +103,10 @@ module.exports = async () => {
                     // console.log("msgInfo: " + JSON.stringify(this.msgInfo))
                     body.params.do_edit = replyInfo.msgId && replyInfo?.botId === replyInfo.userId ?
                         !replyInfo.dontEdit : false;
-                }
-                else {
+                } else if (replyInfo.type === "image" || replyInfo.type === "video" || replyInfo.type === "audio") {
                     body.params.path = replyInfo.path;
+                    body.params.type = replyInfo.type;
+                } else {
                     body.params.type = replyInfo.type;
                 }
 
