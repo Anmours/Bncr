@@ -90,9 +90,7 @@ module.exports = async () => {
                     params: {},
                     echo: uuid,
                 };
-                +replyInfo.groupId
-                    ? (body.params.chat_id = parseInt(replyInfo.groupId))
-                    : (body.params.chat_id = parseInt(replyInfo.friendId));
+                body.params.chat_id = +replyInfo.groupId || +this?.msgInfo?.friendId || +replyInfo.userId;
                 if (replyInfo.msgId)
                     body.params.reply_to_message_id = parseInt(replyInfo.msgId.split(":")[0]);
                 else
