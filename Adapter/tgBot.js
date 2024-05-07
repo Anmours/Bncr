@@ -3,7 +3,7 @@
  * @author Aming
  * @name tgBot
  * @origin Bncr团队
- * @version 1.0.1
+ * @version 1.0.2
  * @description tgBot适配器
  * @adapter true
  * @public false
@@ -12,26 +12,33 @@
  * @Copyright ©2023 Aming and Anmours. All rights reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  */
+/* 配置构造器 */
+const jsonSchema = BncrCreateSchema.object({
+    enable: BncrCreateSchema.boolean().setTitle('是否开启适配器').setDescription(`设置为关则不加载该适配器`).setDefault(false),
+    token: BncrCreateSchema.string().setTitle('tgBot的Token').setDescription(`你的telegarmBot的apiToken`).setDefault(''),
+    proxyHost: BncrCreateSchema.string().setTitle('自建tg反代').setDescription(`你的telegarm自建反代`).setDefault(''),
+});
+
+/* 配置管理器 */
+const ConfigDB = new BncrPluginConfig(jsonSchema);
 
 module.exports = async () => {
-    if (!sysMethod.config.tgBot.enable) return sysMethod.startOutLogs('未启用tgBot 退出.');
+    /* 读取用户配置 */
+    await ConfigDB.get();
+    /* 如果用户未配置,userConfig则为空对象{} */
+    if (!Object.keys(ConfigDB.userConfig).length) {
+        sysMethod.startOutLogs('未配置tgBot适配器,退出.');
+        return;
+    }
+
+    if (!ConfigDB.userConfig.enable) return sysMethod.startOutLogs('未启用tgBot 退出.');
     /* 补全依赖 */
     await sysMethod.testModule(['node-telegram-bot-api'], { install: true });
     const TelegramBot = require(`node-telegram-bot-api`);
-    // const Agent = require('socks5-https-client/lib/Agent');
-    const Token = sysMethod.config.tgBot.token;
+    const Token = ConfigDB.userConfig.token;
     const opt = {
         polling: true,
-        // 测试不支持Agent代理
-        // request: {
-        //     agentClass: Agent,
-        //     agentOptions: {
-        //         socksHost: sysMethod.config.tgBot.proxy.host,
-        //         socksPort: sysMethod.config.tgBot.proxy.port,
-        //         socksUsername: sysMethod.config.tgBot.proxy.username,
-        //         socksPassword: sysMethod.config.tgBot.proxy.password,
-        //     },
-        // },
+        baseApiUrl: ConfigDB.userConfig.proxyHost
     };
 
     const tgBot = new TelegramBot(Token, opt);
@@ -43,7 +50,11 @@ module.exports = async () => {
             if (replyInfo.type === 'text') {
                 send = await tgBot.sendMessage(sendId, replyInfo.msg);
             } else if (replyInfo.type === 'image') {
-                send = await tgBot.sendPhoto(sendId, replyInfo.path);
+                if (replyInfo.msg) {
+                    send = await tgBot.sendPhoto(sendId, replyInfo.path, {caption: replyInfo.msg});
+                } else {
+                    send = await tgBot.sendPhoto(sendId, replyInfo.path);
+                }
             } else if (replyInfo.type === 'video') {
                 send = await tgBot.sendVideo(sendId, replyInfo.path);
             } else if (replyInfo.type === 'audio') {
@@ -62,7 +73,7 @@ module.exports = async () => {
             }
             return send ? `${send.chat.id}:${send.message_id}` : '0';
         } catch (e) {
-            console.error('tg发送消息失败....');
+            console.error('tg发送消息失败....', e.message);
         }
     };
     /* 推送方法 */
@@ -110,6 +121,7 @@ module.exports = async () => {
             console.log('tgBot接收器错误:', e);
         }
     });
+    tgBot.on('polling_error', msg => console.log('tgBot轮询错误:', msg.message));
     sysMethod.startOutLogs('链接tgBot 成功.');
     return tg;
 };
