@@ -1,0 +1,51 @@
+{
+  "annotation0": "该文件由系统自动生成.",
+  "annotation1": "当config.json中pluginsPublishingMode===\"git\"时且有public插件时生成",
+  "annotation2": "该文件用于插件市场索引,当更新插件至git时,请将该文件同步更新至git",
+  "foDwuR0NnmPVk3ZAk42eZcw+0GM=": {
+    "type": "git",
+    "name": "HumanTG",
+    "author": "Anmour",
+    "team": "Bncr团队",
+    "version": "1.0.5",
+    "description": "适配器",
+    "classification": [
+      "官方适配器"
+    ],
+    "filename": "HumanTG.js",
+    "fileDir": "\\Adapter\\HumanTG.js",
+    "systemVersionRange": "",
+    "isAdapter": true,
+    "isCron": false,
+    "isMod": false,
+    "isService": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "id": "foDwuR0NnmPVk3ZAk42eZcw+0GM=",
+    "isChatPlugin": false
+  },
+  "HQABP5Eak8mG6O0TmLmcvgUu5QQ=": {
+    "type": "git",
+    "name": "官方命令",
+    "author": "Aming",
+    "team": "Bncr团队",
+    "version": "1.1.1",
+    "description": "官方命令",
+    "classification": [
+      "官方插件",
+      "拓展命令"
+    ],
+    "filename": "官方命令.js",
+    "fileDir": "\\plugins\\官方插件\\官方命令.js",
+    "systemVersionRange": "",
+    "isAdapter": false,
+    "isCron": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "isMod": false,
+    "isService": false,
+    "id": "HQABP5Eak8mG6O0TmLmcvgUu5QQ=",
+    "isChatPlugin": true
+  }
+
+}
