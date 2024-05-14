@@ -7,8 +7,8 @@
     "name": "HumanTG",
     "author": "Aming",
     "team": "Bncr团队",
-    "version": "1.0.5",
-    "description": "适配器",
+    "version": "1.0.6",
+    "description": "Telegarm人行适配器",
     "classification": [
       "官方适配器"
     ],
@@ -22,6 +22,116 @@
     "isAuthentication": false,
     "isEncPlugin": false,
     "id": "foDwuR0NnmPVk3ZAk42eZcw+0GM=",
+    "isChatPlugin": false
+  },
+  "7NNfSoa/l3XOQVMx06sxq8nP0GM=": {
+    "type": "github",
+    "name": "qq",
+    "author": "Aming",
+    "team": "Bncr团队",
+    "version": "1.0.1",
+    "description": "外置qq机器人适配器",
+    "classification": [
+      "官方适配器"
+    ],
+    "filename": "qq.js",
+    "fileDir": "\\Adapter\\qq.js",
+    "systemVersionRange": "",
+    "isAdapter": true,
+    "isCron": false,
+    "isMod": false,
+    "isService": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "id": "7NNfSoa/l3XOQVMx06sxq8nP0GM=",
+    "isChatPlugin": false
+  },
+  "Ou1UpNnW4Vfb9cfW0tozgSo24bY=": {
+    "type": "github",
+    "name": "tgBot",
+    "author": "Aming",
+    "team": "Bncr团队",
+    "version": "1.0.3",
+    "description": "tgBot适配器",
+    "classification": [
+      "官方适配器"
+    ],
+    "filename": "tgBot.js",
+    "fileDir": "\\Adapter\\tgBot.js",
+    "systemVersionRange": "",
+    "isAdapter": true,
+    "isCron": false,
+    "isMod": false,
+    "isService": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "id": "Ou1UpNnW4Vfb9cfW0tozgSo24bY=",
+    "isChatPlugin": false
+  },
+  "EGHQuMOasj962a33X8+hSZKilss=": {
+    "type": "github",
+    "name": "web",
+    "author": "Aming",
+    "team": "官方",
+    "version": "3.0.0",
+    "description": "web交互适配器",
+    "classification": [
+      "官方适配器"
+    ],
+    "filename": "web.js",
+    "fileDir": "\\Adapter\\web.js",
+    "systemVersionRange": "",
+    "isAdapter": true,
+    "isCron": false,
+    "isMod": false,
+    "isService": false,
+    "isAuthentication": false,
+    "isEncPlugin": true,
+    "id": "EGHQuMOasj962a33X8+hSZKilss=",
+    "isChatPlugin": false
+  },
+  "e1a5xwLSfyUBAG4lyuj324Es2CQ=": {
+    "type": "github",
+    "name": "wxKeAImao",
+    "author": "Aming",
+    "team": "Bncr团队",
+    "version": "1.0.3",
+    "description": "wxKeAImao适配器",
+    "classification": [
+      "官方适配器"
+    ],
+    "filename": "wxKeAImao.js",
+    "fileDir": "\\Adapter\\wxKeAImao.js",
+    "systemVersionRange": "",
+    "isAdapter": true,
+    "isCron": false,
+    "isMod": false,
+    "isService": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "id": "e1a5xwLSfyUBAG4lyuj324Es2CQ=",
+    "isChatPlugin": false
+  },
+  "woHzEAm5BDHNZVkrB2hWAwHyjOc=": {
+    "type": "github",
+    "name": "wxXyo",
+    "author": "Anmour",
+    "team": "Bncr团队",
+    "version": "1.0.2",
+    "description": "wxXyo适配器",
+    "classification": [
+      "官方适配器"
+    ],
+    "filename": "wxXyo.js",
+    "fileDir": "\\Adapter\\wxXyo.js",
+    "systemVersionRange": "",
+    "isAdapter": true,
+    "isCron": false,
+    "isMod": false,
+    "isService": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "id": "woHzEAm5BDHNZVkrB2hWAwHyjOc=",
     "isChatPlugin": false
   },
   "3T77z6K4Kw4PQfPhvsAbqI+99Iw=": {
@@ -106,48 +216,6 @@
     "id": "SO7H5H7/PlpX0u8gAlVHcsaLHFk=",
     "isChatPlugin": false
   },
-  "KaFO9mHbMZZiOcqf3W1zhYukfVw=": {
-    "type": "github",
-    "name": "官方命令",
-    "author": "Aming",
-    "team": "Bncr团队",
-    "version": "3.0.0",
-    "description": "官方命令",
-    "classification": [
-      "官方命令"
-    ],
-    "filename": "官方命令.ts",
-    "fileDir": "\\plugins\\官方插件\\官方命令.ts",
-    "systemVersionRange": "",
-    "isAdapter": false,
-    "isCron": false,
-    "isAuthentication": false,
-    "isEncPlugin": false,
-    "isMod": false,
-    "isService": false,
-    "id": "KaFO9mHbMZZiOcqf3W1zhYukfVw=",
-    "isChatPlugin": true
-  },
-  "Y5ffLbXQM0h5TAuE7alf0+mSEj8=": {
-    "type": "github",
-    "name": "迁移Nedb数据至Level",
-    "author": "Aming",
-    "team": "官方",
-    "version": "1.0.1",
-    "description": "迁移1.x Nedb数据库至Level 2.x及以后无需迁移",
-    "classification": [],
-    "filename": "迁移Nedb数据至Level.ts",
-    "fileDir": "\\plugins\\官方插件\\迁移Nedb数据至Level.ts",
-    "systemVersionRange": "",
-    "isAdapter": false,
-    "isCron": false,
-    "isAuthentication": false,
-    "isEncPlugin": false,
-    "isMod": false,
-    "isService": false,
-    "id": "Y5ffLbXQM0h5TAuE7alf0+mSEj8=",
-    "isChatPlugin": true
-  },
   "umm3WSt6RFlAcUts/CsctZhM6S0=": {
     "type": "github",
     "name": "命令重定向",
@@ -168,6 +236,28 @@
     "isMod": false,
     "isService": false,
     "id": "umm3WSt6RFlAcUts/CsctZhM6S0=",
+    "isChatPlugin": true
+  },
+  "KaFO9mHbMZZiOcqf3W1zhYukfVw=": {
+    "type": "github",
+    "name": "官方命令",
+    "author": "Aming",
+    "team": "Bncr团队",
+    "version": "3.0.0",
+    "description": "官方命令",
+    "classification": [
+      "官方命令"
+    ],
+    "filename": "官方命令.ts",
+    "fileDir": "\\plugins\\官方插件\\官方命令.ts",
+    "systemVersionRange": "",
+    "isAdapter": false,
+    "isCron": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "isMod": false,
+    "isService": false,
+    "id": "KaFO9mHbMZZiOcqf3W1zhYukfVw=",
     "isChatPlugin": true
   },
   "Kt9Iw78wmctsSX3IUtFEH7RpmYU=": {
@@ -192,5 +282,25 @@
     "isService": true,
     "id": "Kt9Iw78wmctsSX3IUtFEH7RpmYU=",
     "isChatPlugin": false
+  },
+  "Y5ffLbXQM0h5TAuE7alf0+mSEj8=": {
+    "type": "github",
+    "name": "迁移Nedb数据至Level",
+    "author": "Aming",
+    "team": "官方",
+    "version": "1.0.1",
+    "description": "迁移1.x Nedb数据库至Level 2.x及以后无需迁移",
+    "classification": [],
+    "filename": "迁移Nedb数据至Level.ts",
+    "fileDir": "\\plugins\\官方插件\\迁移Nedb数据至Level.ts",
+    "systemVersionRange": "",
+    "isAdapter": false,
+    "isCron": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "isMod": false,
+    "isService": false,
+    "id": "Y5ffLbXQM0h5TAuE7alf0+mSEj8=",
+    "isChatPlugin": true
   }
 }
