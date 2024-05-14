@@ -112,6 +112,28 @@
     "id": "e1a5xwLSfyUBAG4lyuj324Es2CQ=",
     "isChatPlugin": false
   },
+  "L5thpiiIR9Tpym0kmdHz08UxFBM=": {
+    "type": "github",
+    "name": "wxQianxun",
+    "author": "Aming",
+    "team": "Bncr团队",
+    "version": "1.0.3",
+    "description": "wxQianxun适配器",
+    "classification": [
+      "官方适配器"
+    ],
+    "filename": "wxQianxun.js",
+    "fileDir": "\\Adapter\\wxQianxun.js",
+    "systemVersionRange": "",
+    "isAdapter": true,
+    "isCron": false,
+    "isMod": false,
+    "isService": false,
+    "isAuthentication": false,
+    "isEncPlugin": false,
+    "id": "L5thpiiIR9Tpym0kmdHz08UxFBM=",
+    "isChatPlugin": false
+  },
   "woHzEAm5BDHNZVkrB2hWAwHyjOc=": {
     "type": "github",
     "name": "wxXyo",
@@ -259,8 +281,8 @@
     "isService": false,
     "id": "KaFO9mHbMZZiOcqf3W1zhYukfVw=",
     "isChatPlugin": true
-  },
-  "Kt9Iw78wmctsSX3IUtFEH7RpmYU=": {
+  }
+}  "Kt9Iw78wmctsSX3IUtFEH7RpmYU=": {
     "type": "github",
     "name": "定时任务",
     "author": "Aming",
