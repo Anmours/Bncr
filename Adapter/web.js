@@ -3,12 +3,13 @@
  * @author Aming
  * @name web
  * @team 官方
- * @version 1.0.3
+ * @version 3.0.0
  * @description web交互适配器
  * @adapter true
- * @public false
+ * @public true
  * @disable false
  * @priority 100
+ * @classification ["官方适配器"]
  * @Copyright ©2023 Aming and Anmours. All rights reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  */
