@@ -1,7 +1,7 @@
 /**
  * @author Aming
  * @name HumanTG_Expand
- * @origin Bncr团队
+ * @team Bncr团队
  * @version v1.0.0
  * @description 拓展人行tg功能
  * @create_at 2034-10-29 19:27:24
@@ -9,8 +9,9 @@
  * @rule ^(\.de) ([0-9]+)$
  * @priority 100000000
  * @admin true
- * @public false
+ * @public true
  * @disable false
+ * @classification []
  */
 
 /* 

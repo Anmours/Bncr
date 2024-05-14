@@ -1,14 +1,15 @@
 /**
  * @author Aming
  * @name 命令重定向
- * @origin Bncr团队
+ * @team Bncr团队
  * @version 1.0.0
  * @description 命令重定向
  * @rule ^(重启无界|重新启动无界|bncr重定向列表)
  * @admin true
- * @public false
+ * @public true
  * @priority 9999
  * @disable false
+ * @classification ["示例插件"]
  */
 
 /* 
