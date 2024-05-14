@@ -2,7 +2,7 @@
  * This file is part of the Bncr project.
  * @author Aming
  * @name wxQianxun
- * @origin Bncr团队
+ * @team Bncr团队
  * @version 1.0.3
  * @description wxQianxun适配器
  * @adapter true
