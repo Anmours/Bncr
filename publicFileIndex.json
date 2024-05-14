@@ -2,7 +2,7 @@
   "annotation0": "该文件由系统自动生成.",
   "annotation1": "当config.json中pluginsPublishingMode===\"git\"时且有public插件时生成",
   "annotation2": "该文件用于插件市场索引,当更新插件至git时,请将该文件同步更新至git",
-  "foDwuR0NnmPVk3ZAk42eZcw+0GM=": {
+  "ujSZPCnfE5KSpUTjaRSgtYJdD5A=": {
     "type": "github",
     "name": "HumanTG",
     "author": "Aming",
@@ -13,7 +13,7 @@
       "官方适配器"
     ],
     "filename": "HumanTG.js",
-    "fileDir": "\\Adapter\\HumanTG.js",
+    "fileDir": "/Adapter/HumanTG.js",
     "systemVersionRange": "",
     "isAdapter": true,
     "isCron": false,
@@ -21,10 +21,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "foDwuR0NnmPVk3ZAk42eZcw+0GM=",
+    "id": "ujSZPCnfE5KSpUTjaRSgtYJdD5A=",
     "isChatPlugin": false
   },
-  "7NNfSoa/l3XOQVMx06sxq8nP0GM=": {
+  "GJ/tDM5zCml9zZ5wHmVabI78zqw=": {
     "type": "github",
     "name": "qq",
     "author": "Aming",
@@ -35,7 +35,7 @@
       "官方适配器"
     ],
     "filename": "qq.js",
-    "fileDir": "\\Adapter\\qq.js",
+    "fileDir": "/Adapter/qq.js",
     "systemVersionRange": "",
     "isAdapter": true,
     "isCron": false,
@@ -43,10 +43,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "7NNfSoa/l3XOQVMx06sxq8nP0GM=",
+    "id": "GJ/tDM5zCml9zZ5wHmVabI78zqw=",
     "isChatPlugin": false
   },
-  "Ou1UpNnW4Vfb9cfW0tozgSo24bY=": {
+  "qQU8/hRFYBFDv9ZLWoQrod8WNEE=": {
     "type": "github",
     "name": "tgBot",
     "author": "Aming",
@@ -57,7 +57,7 @@
       "官方适配器"
     ],
     "filename": "tgBot.js",
-    "fileDir": "\\Adapter\\tgBot.js",
+    "fileDir": "/Adapter/tgBot.js",
     "systemVersionRange": "",
     "isAdapter": true,
     "isCron": false,
@@ -65,10 +65,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "Ou1UpNnW4Vfb9cfW0tozgSo24bY=",
+    "id": "qQU8/hRFYBFDv9ZLWoQrod8WNEE=",
     "isChatPlugin": false
   },
-  "EGHQuMOasj962a33X8+hSZKilss=": {
+  "uSlT1Ll0XYaioinYfLiQQsFMJhg=": {
     "type": "github",
     "name": "web",
     "author": "Aming",
@@ -79,7 +79,7 @@
       "官方适配器"
     ],
     "filename": "web.js",
-    "fileDir": "\\Adapter\\web.js",
+    "fileDir": "/Adapter/web.js",
     "systemVersionRange": "",
     "isAdapter": true,
     "isCron": false,
@@ -87,10 +87,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": true,
-    "id": "EGHQuMOasj962a33X8+hSZKilss=",
+    "id": "uSlT1Ll0XYaioinYfLiQQsFMJhg=",
     "isChatPlugin": false
   },
-  "e1a5xwLSfyUBAG4lyuj324Es2CQ=": {
+  "OIyBevGGiW0iiXpm/CjOCUW+tSE=": {
     "type": "github",
     "name": "wxKeAImao",
     "author": "Aming",
@@ -101,7 +101,7 @@
       "官方适配器"
     ],
     "filename": "wxKeAImao.js",
-    "fileDir": "\\Adapter\\wxKeAImao.js",
+    "fileDir": "/Adapter/wxKeAImao.js",
     "systemVersionRange": "",
     "isAdapter": true,
     "isCron": false,
@@ -109,10 +109,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "e1a5xwLSfyUBAG4lyuj324Es2CQ=",
+    "id": "OIyBevGGiW0iiXpm/CjOCUW+tSE=",
     "isChatPlugin": false
   },
-  "L5thpiiIR9Tpym0kmdHz08UxFBM=": {
+  "uXy0ssFsNngRkeOQRLmFWomSFtQ=": {
     "type": "github",
     "name": "wxQianxun",
     "author": "Aming",
@@ -123,7 +123,7 @@
       "官方适配器"
     ],
     "filename": "wxQianxun.js",
-    "fileDir": "\\Adapter\\wxQianxun.js",
+    "fileDir": "/Adapter/wxQianxun.js",
     "systemVersionRange": "",
     "isAdapter": true,
     "isCron": false,
@@ -131,10 +131,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "L5thpiiIR9Tpym0kmdHz08UxFBM=",
+    "id": "uXy0ssFsNngRkeOQRLmFWomSFtQ=",
     "isChatPlugin": false
   },
-  "woHzEAm5BDHNZVkrB2hWAwHyjOc=": {
+  "u4WIUzX0LxXGwMkSmLW3JViCXJI=": {
     "type": "github",
     "name": "wxXyo",
     "author": "Anmour",
@@ -145,7 +145,7 @@
       "官方适配器"
     ],
     "filename": "wxXyo.js",
-    "fileDir": "\\Adapter\\wxXyo.js",
+    "fileDir": "/Adapter/wxXyo.js",
     "systemVersionRange": "",
     "isAdapter": true,
     "isCron": false,
@@ -153,10 +153,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "woHzEAm5BDHNZVkrB2hWAwHyjOc=",
+    "id": "u4WIUzX0LxXGwMkSmLW3JViCXJI=",
     "isChatPlugin": false
   },
-  "3T77z6K4Kw4PQfPhvsAbqI+99Iw=": {
+  "5rREjt4pVO4oJs8u7bdS5MxbF2Y=": {
     "type": "github",
     "name": "BncrPluginConfig-示例",
     "author": "Aming",
@@ -167,7 +167,7 @@
       "示例插件"
     ],
     "filename": "BncrPluginConfig-示例.js",
-    "fileDir": "\\plugins\\官方插件\\BncrPluginConfig-示例.js",
+    "fileDir": "/plugins/官方插件/BncrPluginConfig-示例.js",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -175,10 +175,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "3T77z6K4Kw4PQfPhvsAbqI+99Iw=",
+    "id": "5rREjt4pVO4oJs8u7bdS5MxbF2Y=",
     "isChatPlugin": true
   },
-  "sg/huCJ4HRjV9HyZaeAW948njKs=": {
+  "D4njszDXcdBUNOf1qfkQswevzM4=": {
     "type": "github",
     "name": "HumanTG_Expand",
     "author": "Aming",
@@ -187,7 +187,7 @@
     "description": "拓展人行tg功能",
     "classification": [],
     "filename": "HumanTG_Expand.js",
-    "fileDir": "\\plugins\\官方插件\\HumanTG_Expand.js",
+    "fileDir": "/plugins/官方插件/HumanTG_Expand.js",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -195,10 +195,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "sg/huCJ4HRjV9HyZaeAW948njKs=",
+    "id": "D4njszDXcdBUNOf1qfkQswevzM4=",
     "isChatPlugin": true
   },
-  "kJOuBVCB0WmsWtZvEBF2SUDcKlk=": {
+  "LbRnvf9NY4M9gAd6/QtE4YarE/k=": {
     "type": "github",
     "name": "webApi",
     "author": "Aming",
@@ -207,7 +207,7 @@
     "description": "Bncr的web界面后端api",
     "classification": [],
     "filename": "webApi.ts",
-    "fileDir": "\\plugins\\官方插件\\webApi.ts",
+    "fileDir": "/plugins/官方插件/webApi.ts",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -215,10 +215,10 @@
     "isEncPlugin": true,
     "isMod": false,
     "isService": true,
-    "id": "kJOuBVCB0WmsWtZvEBF2SUDcKlk=",
+    "id": "LbRnvf9NY4M9gAd6/QtE4YarE/k=",
     "isChatPlugin": false
   },
-  "SO7H5H7/PlpX0u8gAlVHcsaLHFk=": {
+  "xugvGVmvk6xrCaS21sWCbdMOZEc=": {
     "type": "github",
     "name": "启动钩子",
     "author": "Aming",
@@ -227,7 +227,7 @@
     "description": "向系统启动完成后执行方法中添加钩子函数",
     "classification": [],
     "filename": "启动钩子.ts",
-    "fileDir": "\\plugins\\官方插件\\启动钩子.ts",
+    "fileDir": "/plugins/官方插件/启动钩子.ts",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -235,10 +235,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": true,
-    "id": "SO7H5H7/PlpX0u8gAlVHcsaLHFk=",
+    "id": "xugvGVmvk6xrCaS21sWCbdMOZEc=",
     "isChatPlugin": false
   },
-  "umm3WSt6RFlAcUts/CsctZhM6S0=": {
+  "He5sOwMWAyOr/Wh7pQ+VSCvIVN4=": {
     "type": "github",
     "name": "命令重定向",
     "author": "Aming",
@@ -249,7 +249,7 @@
       "示例插件"
     ],
     "filename": "命令重定向.js",
-    "fileDir": "\\plugins\\官方插件\\命令重定向.js",
+    "fileDir": "/plugins/官方插件/命令重定向.js",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -257,10 +257,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "umm3WSt6RFlAcUts/CsctZhM6S0=",
+    "id": "He5sOwMWAyOr/Wh7pQ+VSCvIVN4=",
     "isChatPlugin": true
   },
-  "KaFO9mHbMZZiOcqf3W1zhYukfVw=": {
+  "7E4tLuOoKE+YQ7b+cJ8s5X/6Yq4=": {
     "type": "github",
     "name": "官方命令",
     "author": "Aming",
@@ -271,7 +271,7 @@
       "官方命令"
     ],
     "filename": "官方命令.ts",
-    "fileDir": "\\plugins\\官方插件\\官方命令.ts",
+    "fileDir": "/plugins/官方插件/官方命令.ts",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -279,10 +279,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "KaFO9mHbMZZiOcqf3W1zhYukfVw=",
+    "id": "7E4tLuOoKE+YQ7b+cJ8s5X/6Yq4=",
     "isChatPlugin": true
   },
-  "Kt9Iw78wmctsSX3IUtFEH7RpmYU=": {
+  "CYRp4ESonsXn1p2IkuRI1jVgSIQ=": {
     "type": "github",
     "name": "定时任务",
     "author": "Aming",
@@ -294,7 +294,7 @@
       "示例插件"
     ],
     "filename": "定时任务.js",
-    "fileDir": "\\plugins\\官方插件\\定时任务.js",
+    "fileDir": "/plugins/官方插件/定时任务.js",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -302,10 +302,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": true,
-    "id": "Kt9Iw78wmctsSX3IUtFEH7RpmYU=",
+    "id": "CYRp4ESonsXn1p2IkuRI1jVgSIQ=",
     "isChatPlugin": false
   },
-  "Y5ffLbXQM0h5TAuE7alf0+mSEj8=": {
+  "sfVTnkI61I6GGsnFS24YJXhIMEM=": {
     "type": "github",
     "name": "迁移Nedb数据至Level",
     "author": "Aming",
@@ -314,7 +314,7 @@
     "description": "迁移1.x Nedb数据库至Level 2.x及以后无需迁移",
     "classification": [],
     "filename": "迁移Nedb数据至Level.ts",
-    "fileDir": "\\plugins\\官方插件\\迁移Nedb数据至Level.ts",
+    "fileDir": "/plugins/官方插件/迁移Nedb数据至Level.ts",
     "systemVersionRange": "",
     "isAdapter": false,
     "isCron": false,
@@ -322,7 +322,7 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "Y5ffLbXQM0h5TAuE7alf0+mSEj8=",
+    "id": "sfVTnkI61I6GGsnFS24YJXhIMEM=",
     "isChatPlugin": true
   }
 }
