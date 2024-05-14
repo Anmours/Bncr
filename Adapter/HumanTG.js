@@ -4,7 +4,7 @@
  * @name HumanTG
  * @team Bncr团队
  * @version 1.0.6
- * @description 适配器
+ * @description Telegarm人行适配器
  * @adapter true
  * @public true
  * @disable false
