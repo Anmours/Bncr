@@ -2,7 +2,7 @@
   "annotation0": "该文件由系统自动生成.",
   "annotation1": "当config.json中pluginsPublishingMode===\"git\"时且有public插件时生成",
   "annotation2": "该文件用于插件市场索引,当更新插件至git时,请将该文件同步更新至git",
-  "ujSZPCnfE5KSpUTjaRSgtYJdD5A=": {
+  "QX5RavlIH31jh9yV9vKMzahK+tk=": {
     "type": "github",
     "name": "HumanTG",
     "author": "Aming",
@@ -21,10 +21,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "ujSZPCnfE5KSpUTjaRSgtYJdD5A=",
+    "id": "QX5RavlIH31jh9yV9vKMzahK+tk=",
     "isChatPlugin": false
   },
-  "GJ/tDM5zCml9zZ5wHmVabI78zqw=": {
+  "pM2geMZcPdbWEJ/qrwL666yEBP4=": {
     "type": "github",
     "name": "qq",
     "author": "Aming",
@@ -43,10 +43,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "GJ/tDM5zCml9zZ5wHmVabI78zqw=",
+    "id": "pM2geMZcPdbWEJ/qrwL666yEBP4=",
     "isChatPlugin": false
   },
-  "qQU8/hRFYBFDv9ZLWoQrod8WNEE=": {
+  "xXwpd8SPCfZ06vcvqQCTKXAiHQ8=": {
     "type": "github",
     "name": "tgBot",
     "author": "Aming",
@@ -65,10 +65,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "qQU8/hRFYBFDv9ZLWoQrod8WNEE=",
+    "id": "xXwpd8SPCfZ06vcvqQCTKXAiHQ8=",
     "isChatPlugin": false
   },
-  "uSlT1Ll0XYaioinYfLiQQsFMJhg=": {
+  "IxmdixsmKwTuMOl9hQjyBBk6Oqc=": {
     "type": "github",
     "name": "web",
     "author": "Aming",
@@ -87,10 +87,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": true,
-    "id": "uSlT1Ll0XYaioinYfLiQQsFMJhg=",
+    "id": "IxmdixsmKwTuMOl9hQjyBBk6Oqc=",
     "isChatPlugin": false
   },
-  "OIyBevGGiW0iiXpm/CjOCUW+tSE=": {
+  "vgi94FtwpjHpVNpQrC9Fb3Q8BIA=": {
     "type": "github",
     "name": "wxKeAImao",
     "author": "Aming",
@@ -109,10 +109,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "OIyBevGGiW0iiXpm/CjOCUW+tSE=",
+    "id": "vgi94FtwpjHpVNpQrC9Fb3Q8BIA=",
     "isChatPlugin": false
   },
-  "uXy0ssFsNngRkeOQRLmFWomSFtQ=": {
+  "wAOS0D6TIOBHib03r3xqCxDF5Ac=": {
     "type": "github",
     "name": "wxQianxun",
     "author": "Aming",
@@ -131,10 +131,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "uXy0ssFsNngRkeOQRLmFWomSFtQ=",
+    "id": "wAOS0D6TIOBHib03r3xqCxDF5Ac=",
     "isChatPlugin": false
   },
-  "u4WIUzX0LxXGwMkSmLW3JViCXJI=": {
+  "WqKaJKsunZOU1J3q1DGFigrkdA0=": {
     "type": "github",
     "name": "wxXyo",
     "author": "Anmour",
@@ -153,10 +153,10 @@
     "isService": false,
     "isAuthentication": false,
     "isEncPlugin": false,
-    "id": "u4WIUzX0LxXGwMkSmLW3JViCXJI=",
+    "id": "WqKaJKsunZOU1J3q1DGFigrkdA0=",
     "isChatPlugin": false
   },
-  "5rREjt4pVO4oJs8u7bdS5MxbF2Y=": {
+  "0zd8NJLZWkmsz1ZXtYRqY/3uk44=": {
     "type": "github",
     "name": "BncrPluginConfig-示例",
     "author": "Aming",
@@ -175,10 +175,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "5rREjt4pVO4oJs8u7bdS5MxbF2Y=",
+    "id": "0zd8NJLZWkmsz1ZXtYRqY/3uk44=",
     "isChatPlugin": true
   },
-  "D4njszDXcdBUNOf1qfkQswevzM4=": {
+  "YV/LDZss4V0TMF6oCJKWzTNfOvE=": {
     "type": "github",
     "name": "HumanTG_Expand",
     "author": "Aming",
@@ -195,15 +195,15 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "D4njszDXcdBUNOf1qfkQswevzM4=",
+    "id": "YV/LDZss4V0TMF6oCJKWzTNfOvE=",
     "isChatPlugin": true
   },
-  "LbRnvf9NY4M9gAd6/QtE4YarE/k=": {
+  "iFjpng8nyHmlnOnLv43pfsCVVh4=": {
     "type": "github",
     "name": "webApi",
     "author": "Aming",
     "team": "红灯区",
-    "version": "3.0.0",
+    "version": "2.8.8",
     "description": "Bncr的web界面后端api",
     "classification": [],
     "filename": "webApi.ts",
@@ -215,10 +215,10 @@
     "isEncPlugin": true,
     "isMod": false,
     "isService": true,
-    "id": "LbRnvf9NY4M9gAd6/QtE4YarE/k=",
+    "id": "iFjpng8nyHmlnOnLv43pfsCVVh4=",
     "isChatPlugin": false
   },
-  "xugvGVmvk6xrCaS21sWCbdMOZEc=": {
+  "GoXszTSqzG5EDwxKLMgO3ZSTJag=": {
     "type": "github",
     "name": "启动钩子",
     "author": "Aming",
@@ -235,10 +235,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": true,
-    "id": "xugvGVmvk6xrCaS21sWCbdMOZEc=",
+    "id": "GoXszTSqzG5EDwxKLMgO3ZSTJag=",
     "isChatPlugin": false
   },
-  "He5sOwMWAyOr/Wh7pQ+VSCvIVN4=": {
+  "pDeT+0wtOlbwTO1RVxqj54klhJE=": {
     "type": "github",
     "name": "命令重定向",
     "author": "Aming",
@@ -257,10 +257,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "He5sOwMWAyOr/Wh7pQ+VSCvIVN4=",
+    "id": "pDeT+0wtOlbwTO1RVxqj54klhJE=",
     "isChatPlugin": true
   },
-  "7E4tLuOoKE+YQ7b+cJ8s5X/6Yq4=": {
+  "tKzo8b3Zl0jUo7FBlPkmOCMEaNM=": {
     "type": "github",
     "name": "官方命令",
     "author": "Aming",
@@ -279,10 +279,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "7E4tLuOoKE+YQ7b+cJ8s5X/6Yq4=",
+    "id": "tKzo8b3Zl0jUo7FBlPkmOCMEaNM=",
     "isChatPlugin": true
   },
-  "CYRp4ESonsXn1p2IkuRI1jVgSIQ=": {
+  "5KgoaP7NQGvEzxsLxxBK0bHe4gA=": {
     "type": "github",
     "name": "定时任务",
     "author": "Aming",
@@ -302,10 +302,10 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": true,
-    "id": "CYRp4ESonsXn1p2IkuRI1jVgSIQ=",
+    "id": "5KgoaP7NQGvEzxsLxxBK0bHe4gA=",
     "isChatPlugin": false
   },
-  "sfVTnkI61I6GGsnFS24YJXhIMEM=": {
+  "iO4QqtZoS0f2TNvfMxHqpQ3rMcU=": {
     "type": "github",
     "name": "迁移Nedb数据至Level",
     "author": "Aming",
@@ -322,7 +322,7 @@
     "isEncPlugin": false,
     "isMod": false,
     "isService": false,
-    "id": "sfVTnkI61I6GGsnFS24YJXhIMEM=",
+    "id": "iO4QqtZoS0f2TNvfMxHqpQ3rMcU=",
     "isChatPlugin": true
   }
 }
