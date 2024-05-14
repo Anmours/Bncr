@@ -2,21 +2,16 @@
  * This file is part of the Bncr project.
  * @author Aming
  * @name wxQianxun
- * @origin Bncr团队
- * @version 1.0.2
+ * @team Bncr团队
+ * @version 1.0.3
  * @description wxQianxun适配器
  * @adapter true
- * @public false
+ * @public true
  * @disable false
  * @priority 2
  * @Copyright ©2023 Aming and Anmours. All rights reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
- * Modified by Merrick
  */
-
-/* 更新日志：
-    v1.0.2 增加了自动同意添加好友和拉群功能，需要插件配合，插件下载地址：https://github.com/Merrickk/Bncr_plugins
-*/
 
 /* 配置构造器 */
 const jsonSchema = BncrCreateSchema.object({
@@ -40,7 +35,6 @@ module.exports = async () => {
   //这里new的名字将来会作为 sender.getFrom() 的返回值
   const wxQianxun = new Adapter('wxQianxun');
   // 包装原生require   你也可以使用其他任何请求工具 例如axios
-  wxQianxun.Bridge = {};
   const request = require('util').promisify(require('request'));
   // wx数据库
   const wxDB = new BncrDB('wxQianxun');
@@ -53,6 +47,7 @@ module.exports = async () => {
       if (botId !== body.wxid)
         /* 另一种set数据库操作，第三个值必须为一个对象，传入def字段时，设置成功返回def设置的值*/
         botId = await wxDB.set('qianxun_botid', body.wxid, { def: body.wxid });
+
       // console.log('消息类型:', body.data.data.msgType);
 
       /**
@@ -60,7 +55,7 @@ module.exports = async () => {
        * 动态表情 48|地理位置 49|分享链接或附件 2001|
        * 红包 2002|小程序 2003|群邀请 10000|系统消息
        */
-      // if (body.data.data.msgType !== 1) return `拒收该消息:${body.msg}`;
+      if (body.data.data.msgType !== 1) return `拒收该消息:${body.msg}`;
       let msgInfo = null;
       //私聊
       if (body.event === 10009 && body.data.data.fromType === 1) {
@@ -83,18 +78,6 @@ module.exports = async () => {
           msg: body.data.data.msg || '',
           msgId: body.data.data.msgBase64 || '',
           fromType: `Social`,
-        };
-        // 自动同意好友请求
-      } else if (body.event === 10011) {
-        wxQianxun.Bridge.body = body;
-        msgInfo = {
-          userId: 'EventFriendVerify',
-          userName: '好友申请通知',
-          groupId: '0',
-          groupName: '',
-          msg: '收到千寻好友添加请求',
-          msgId: '',
-          fromType: 'Friend',
         };
       }
       msgInfo && wxQianxun.receive(msgInfo);
@@ -129,28 +112,6 @@ module.exports = async () => {
           },
         };
         break;
-        // 自动同意好友请求
-        case 'friend':
-          body = {
-            type: 'Q0017',
-            data: {
-              scene: '6',
-              v3: replyInfo.v3,
-              v4: replyInfo.v4
-            },
-          };
-          break;
-          // 拉群
-          case 'group':
-            body = {
-              type: 'Q0021',
-              data: {
-                wxid: replyInfo.wxid,
-                objWxid: replyInfo.objWxid,
-                type: replyInfo.add_type
-              },
-            };
-            break;
       default:
         return;
         break;
