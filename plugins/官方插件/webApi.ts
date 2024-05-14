@@ -3,7 +3,7 @@
  * @name webApi
  * @description Bncr的web界面后端api
  * @team 红灯区
- * @version v3.0.0
+ * @version 3.0.0
  * @priority 1000000000
  * @admin true
  * @disable false

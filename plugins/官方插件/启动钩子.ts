@@ -3,7 +3,7 @@
  * @name 启动钩子
  * @description 向系统启动完成后执行方法中添加钩子函数
  * @team Bncr团队
- * @version v1.0.0
+ * @version 1.0.0
  * @priority 100
  * @disable false
  * @service true

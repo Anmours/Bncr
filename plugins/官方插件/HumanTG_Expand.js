@@ -2,7 +2,7 @@
  * @author Aming
  * @name HumanTG_Expand
  * @team Bncr团队
- * @version v1.0.0
+ * @version 1.0.0
  * @description 拓展人行tg功能
  * @create_at 2034-10-29 19:27:24
  * @rule ^(\.id|\.re)
