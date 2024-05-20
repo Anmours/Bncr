@@ -3,7 +3,7 @@
  * @name 替换origin
  * @team Bncr团队
  * @version 1.0.0
- * @description 替换Adapter plugins下所有文件的origin为team
+ * @description 2.x升级到3.x后所用，用于替换Adapter plugins下所有文件的origin为team
  * @rule ^(升级文件到新版)$
  * @admin false
  * @priority 9999
