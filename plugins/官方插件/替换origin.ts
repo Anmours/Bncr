@@ -2,10 +2,10 @@
  * @author Aming
  * @name 替换origin
  * @team Bncr团队
- * @version 1.0.0
+ * @version 1.0.1
  * @description 2.x升级到3.x后所用，用于替换Adapter plugins下所有文件的origin为team
  * @rule ^(升级文件到新版)$
- * @admin false
+ * @admin true
  * @priority 9999
  * @classification ["官方命令"]
  * @public true
