@@ -201,7 +201,7 @@
     "name": "webApi",
     "author": "Aming",
     "team": "红灯区",
-    "version": "3.0.0",
+    "version": "2.8.9",
     "description": "Bncr的web界面后端api",
     "classification": [],
     "filename": "webApi.ts",
