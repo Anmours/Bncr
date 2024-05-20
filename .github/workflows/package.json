@@ -1,0 +1,9 @@
+{
+  "name": "json-index-generator",
+  "version": "1.0.0",
+  "main": "generate_index.js",
+  "scripts": {
+    "start": "node generate_index.js"
+  },
+  "dependencies": {}
+}
