@@ -1,0 +1,36 @@
+name: 生成 插件市场所需 索引
+
+on:
+  push:
+    paths:
+      - 'Adapter/**'
+      - 'plugins/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v2
+
+      - name: 设置 Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: 安装依赖
+        run: npm install
+
+      - name: 由Actions自动生成插件市场所需JSON索引
+        run: node .github/workflows/generate_index.js
+
+      - name: 提交并推送更改
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add publicFileIndex.json
+          git commit -m '由Actions自动生成插件市场所需JSON索引'
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
