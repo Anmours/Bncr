@@ -61,7 +61,7 @@ module.exports = async s => {
             return;
         case '.de':
             let num = +s.param(2),
-                info = await s.Bridge.getUserMsgId(ChatID, adminID, num + 1);
+                info = await s.Bridge.getUserMsgId(ChatID, s.getUserId(), num + 1);
             info.length && s.delMsg(...info), s.delMsg(await s.reply(`已删除${info.length - 1}/${num}`), { wait: 3 });
             return;
         case '.re':

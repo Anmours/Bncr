@@ -302,17 +302,26 @@ module.exports = () => {
         lastID = 0;
       try {
         const get = async (offsetId = 0) => {
-          for (const message of await client.getMessages(chatID, { limit: 100, offsetId })) {
-            message.fromId?.userId?.toString() === userId && arr.push(message.id);
+          let messages = await client.getMessages(chatID, { limit: 100});
+          for (const message of messages) {
+            if (message?.fromId?.userId.toString() === userId) {
+              arr.push(message.id);
+              lastID = message.id;
+            }
             if (arr.length === num) break;
-            lastID = message.id;
           }
-          if (arr.length === num || lastID - 1 < 1) return arr;
-          return await get(lastID);
+          if (arr.length < num) {
+            messages = await client.getMessages(chatID, { fromUser:"me", offsetId:lastID });
+            for (const message of messages) {
+              arr.push(message.id);
+              if (arr.length === num) break;
+            }
+          }
+          if (arr.length === num || messages.length === 0) return arr;
         };
         return await get();
       } catch {
-        return [];
+        return arr || [];
       }
     };
     HumanTG.Bridge.forwardMessages = async function (chatID, msgId, toChatId) {
