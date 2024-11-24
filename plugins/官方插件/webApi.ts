@@ -7,7 +7,7 @@
  * @priority 100
  * @admin true
  * @disable false
- * @public false
+ * @public true
  * @service true
  * @classification []
  */
