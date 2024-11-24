@@ -196,6 +196,26 @@
     "id": "YV/LDZss4V0TMF6oCJKWzTNfOvE=",
     "isChatPlugin": true
   },
+  "WxpkMOeRcdW0OstnZzVGAk1Uutw=": {
+    "type": "github",
+    "name": "webApi",
+    "author": "Aming",
+    "team": "bncr官方",
+    "version": "2.9.1",
+    "description": "Bncr的web后端api",
+    "classification": [],
+    "filename": "webApi.ts",
+    "fileDir": "/plugins/官方插件/webApi.ts",
+    "systemVersionRange": "",
+    "isCron": false,
+    "isAdapter": false,
+    "isMod": false,
+    "isService": true,
+    "isAuthentication": false,
+    "isEncPlugin": true,
+    "id": "WxpkMOeRcdW0OstnZzVGAk1Uutw=",
+    "isChatPlugin": false
+  },
   "GoXszTSqzG5EDwxKLMgO3ZSTJag=": {
     "type": "github",
     "name": "启动钩子",
