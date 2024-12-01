@@ -201,7 +201,7 @@
     "name": "webApi",
     "author": "Aming",
     "team": "bncr官方",
-    "version": "2.9.3",
+    "version": "2.9.4",
     "description": "Bncr的web后端api",
     "classification": [],
     "filename": "webApi.ts",
